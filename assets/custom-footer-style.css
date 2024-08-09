@@ -1,0 +1,263 @@
+.custom-newsletter .fm__title{
+    margin: 0;
+    font-size: 20px;
+    line-height: 24px;  
+    font-family: inherit;
+}
+.fm__title{
+    margin: 0 0 16px 0;
+}
+.btn_input-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 152px;
+      align-items: center;
+      gap: 16px;
+  }
+  .custom-newsletter img{
+    max-width: 80px;
+    height: auto;
+    object-fit: cover;
+    margin: 00 0 32px 0;
+  }
+  .social_img-wrapper{
+      display: flex;
+      gap: 17px;
+      align-items: center;    
+    }
+   .cf_county-selector,
+    .svg__wrapper-error{
+      display: none;
+    }
+    .footer_menu-list-1 .fm__title,
+    .footer_menu-list-2 .fm__title
+    {
+      font-size: 20px;
+      line-height: 26px;
+      font-family: inherit;
+      margin: 0 0 24px 0;
+    }
+    .submenu {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .cf__list-payment li{
+      margin-bottom: 0;
+      list-style: none;
+    }
+    .submenu a{
+      text-decoration: none;
+      color: var(--Text-Base-Secondary, #4B6263);
+      font-family: Satoshi;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+    }
+    .submenu a:hover{
+      text-decoration: underline;
+    }
+    .custom-newsletter p{
+      color: var(--Text-Base-Secondary, #4B6263);
+      font-family: Satoshi;
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 26px;
+      @media(max-width: 768px){
+        margin: 0 0 16px 0;        
+      }
+    }
+    
+    .custom-newsletter {
+      /* justify-self: end;
+      width: 80%; */
+    }
+    .footer__top-wrapper {
+      display: grid;
+      grid-template-columns: 3fr 5fr;
+    }
+    .footer-menu {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      justify-items: center;
+    }
+    .email_inp {
+      /* display: flex; */
+      max-width: var(--Spacing-140, 560px);
+      flex-direction: column;
+      gap: 6px;
+      border-radius: var(--rounded-lg, 8px);
+      border: 1px solid var(--input-border-light-main, #D1D5DB);
+      background: var(--input-bg-default, #FFF);
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      display: flex;
+      height: 48px;
+      padding: 0px var(--Spacing-Container-xs, 12px);
+      gap: 8px;
+      align-self: stretch;
+      overflow: hidden;
+      color: var(--input-text-placeholder, #6B7280);
+      text-overflow: ellipsis;
+      font-family: Satoshi;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+      flex: 1 0 0;
+      /* justify-content: center; */      
+      width: 100%;
+      /* border: none; */
+      border: 1px solid rgb(191 193 191);
+      padding: 15px 13px;
+      outline: none;
+      /* margin-top: 16px; */
+      margin: 0;
+    }
+    .email_inp:focus-visible{
+      outline: none;
+      outline-offset: 0;
+      box-shadow: unset;
+    }
+
+    .email_inp::placeholder{
+      color: var(--input-text-placeholder, #6B7280);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    .btn_submit{
+      display: flex;
+      padding: var(--Spacing-Container-xs, 12px) 40px;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      border-radius: var(--rounded-lg, 8px);
+      border: 2px solid #FECDFE;
+      background: var(--primary, #FFD6FF);
+      color: #000;
+      height: 48px;
+      color: var(--Content-Base-secondary, #374151);
+      font-family: Satoshi;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -.4px;
+      cursor: pointer;
+    }
+    .btn_submit:hover{
+      /* background: rgb(254 196 140); */
+    }
+    .form__message {
+      justify-content: center;
+    }
+    .cf-errror_msg {
+      display: unset;
+      color: #000;
+    }
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 64px;
+      @media(max-width: 768px){
+        margin-top: 32px;
+      }
+    }
+    .footer__bottom-content {
+      margin-top: 10rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .copyright__content {
+      color: #000;
+      text-align: right;
+      font-family: Satoshi;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 200%;
+    }
+    .cf__list-payment {
+      display: flex;
+      gap: 12px;
+      padding: 0;
+      /* margin: 69px 0 0 0; */
+    }
+    .social__icon-wrapper {
+      display: flex;
+      gap: 10px;
+      --icon-size: 23px;
+      margin-top: 30px;
+    }
+    .social__icon .icon {
+      height: 24PX;
+      width: 24PX;
+      color: #000;
+    }
+  @media screen and (max-width: 890px){
+    .custom-newsletter img{
+      width: 60px;
+      height: auto;
+      object-fit: cover;
+      margin-bottom: 24px;
+    }
+    .footer_menu-list-1{
+      grid-column: 2/-1;
+      grid-row: 1/2;
+    }
+    .footer__top-wrapper {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .footer__bottom {
+      align-items: self-start;
+      flex-direction: column;
+    }    
+    .footer-menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 16px;
+      row-gap: 32px;
+      justify-items: start;
+      margin-top: 32px;
+    }
+    .cf__list-payment {
+      margin: 0;
+    }
+    .footer-menu ul {
+        padding: 0;
+        margin: 0;
+    }
+   .custom-newsletter {
+      justify-self: start;
+      width: 100%;
+    }
+    .cf__list-payment {
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    .footer__bottom-content {
+      flex-direction: column-reverse;
+    }
+    .copyright__country-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+    .copyright__content {
+      text-wrap: nowrap;
+      letter-spacing: 0;
+    }
+    .cf__region .disclosure .disclosure__button {
+      margin: 0;
+    }
+    .btn_input-wrapper {
+      grid-template-columns: 1fr;
+    }
+    .btn_submit{
+      width: 100%;      
+    }
+  }

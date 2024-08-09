@@ -1,0 +1,84 @@
+{%- liquid
+  assign currencies = localization.available_countries | map: 'currency' | map: 'iso_code' | uniq
+  assign popular_countries = localization.available_countries | where: 'popular?' | sort: 'name'
+
+  # assign show_country_filter = false
+  if localization.available_countries.size > 9
+    # assign show_country_filter = true
+  endif
+
+  # assign show_popular_countries = false
+  if localization.available_countries.size > 9 and popular_countries.size > 1
+    # assign show_popular_countries = true
+  endif
+
+  # assign show_currencies = false
+  if currencies.size > 1
+    # assign show_currencies = true
+  endif
+%}
+
+<style>
+  .gelico-localization-wrapper *:focus-visible {
+    outline: none;
+    outline-offset: 0;
+    box-shadow: none;
+  }
+  .gelico-localization-wrapper {
+    display: flex;
+    gap: 25px;
+  }
+  .gelico-localization-wrapper select {
+    border: none;
+    background: transparent;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5IiBoZWlnaHQ9IjkiIHZpZXdCb3g9IjAgMCA5IDkiIGZpbGw9Im5vbmUiPg0KICA8bGluZSB5MT0iNC41IiB4Mj0iOSIgeTI9IjQuNSIgc3Ryb2tlPSJibGFjayIvPg0KICA8bGluZSB4MT0iNC41IiB5MT0iOSIgeDI9IjQuNSIgeTI9IjIuMTg1NTdlLTA4IiBzdHJva2U9ImJsYWNrIi8+DQo8L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-position: top 49% right;
+    appearance: none;
+    -webkit-appearance: none;
+    color: black;
+    box-sizing: border-box;
+    padding-right: 8px;
+  }
+</style>
+
+<div class="gelico-localization-wrapper">
+  {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+    <gelico-localizationform>
+      {%- form 'localization', class: 'gelico-localization-lang-form' -%}
+        <select name="language_code">
+          {%- for language in localization.available_languages -%}
+            <option
+              value="{{ language.iso_code }}"
+              {% if language.iso_code == localization.language.iso_code %}
+                selected
+              {% endif %}
+            >
+              {{ language.iso_code | capitalize }} &nbsp;
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- endform -%}
+    </gelico-localizationform>
+  {%- endif -%}
+
+  {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+    <gelico-localizationform>
+      {%- form 'localization', class: 'gelico-localization-country-form' -%}
+        <select name="country_code">
+          {%- for country in localization.available_countries -%}
+            <option
+              value="{{ country.iso_code }}"
+              {% if country.iso_code == localization.country.iso_code %}
+                selected
+              {% endif %}
+            >
+              {{ country.iso_code }} |
+              {{ country.currency.iso_code }}
+            </option>
+          {%- endfor -%}
+        </select>
+      {%- endform -%}
+    </gelico-localizationform>
+  {% endif %}
+</div>

@@ -1,0 +1,400 @@
+<style>
+            .section-container--{{ section.id }}{
+              margin-top: {{ section.settings.margin_top | append:'px' }};
+              margin-bottom: {{ section.settings.margin_bottom | append:'px' }};
+              padding-top: {{ section.settings.padding_top | append:'px' }};
+              padding-bottom: {{ section.settings.padding_bottom | append:'px' }};
+              overflow: hidden;
+              background-color: {{ section.settings.bg-color }};
+            }
+
+      .section-wrapper--{{ section.id }} {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 50px;
+         @media screen and (max-width: 768px){
+           grid-template-columns: 1fr;
+         }
+
+        h2,h5, p {
+          margin-block: 0;
+          font-family: Satoshi;
+        }
+
+        .faq-left{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          h1 {
+              margin-block: 0;
+              color: #111827;
+              font-size: 42px;
+              font-weight: 400;
+              line-height: 46px;
+              letter-spacing: -1.26px;
+              text-transform: capitalize;
+              @media screen and (max-width: 768px){
+                margin-block: 32px;
+                font-size: 32px;
+                line-height: 36px;
+              }
+          }
+
+          .question-block {
+              border-radius: 8px;
+              border: 1px solid  #E5E7EB;
+              background: #FFFAFF;
+              display: flex;
+              padding: 24px;
+              margin-bottom: 40px;
+              flex-direction: column;
+              /* align-items: flex-start; */
+              align-items: center;
+              /* gap: 24px; */
+              align-self: stretch;
+
+              h5 {
+                  color: #111827;
+                  font-size: 20px;
+                  line-height: 24px;
+                  margin-bottom: 8px;
+                  font-weight: 600;
+                  @media screen and (max-width: 768px){
+                    font-size: 18px;
+                    line-height: 24px;
+                    font-weight: 400;
+                  }
+              }
+              p {
+                  color: #374151;
+                  font-size: 16px;
+                  line-height: 150%;
+                  letter-spacing: -0.32px;
+                  margin-bottom: 24px;
+                  @media screen and (max-width: 768px){
+                      font-size: 13px;
+                      line-height: 16px; /* 123.077% */
+                      letter-spacing: -0.26px;
+                  }
+                  span {
+                    color: #D633D6;
+                  }
+              }
+
+
+              a.question-button {
+                  /* display: block; */
+                  color: #374151;
+                  letter-spacing: -0.4px;
+                  text-decoration: none;
+                  text-align: center;
+                  background: #FECDFE;
+                  padding: 10px 40px;
+                  border-radius: 25px;
+                  margin: auto;
+                  width: 100%;
+                  font-family: Satoshi;
+                  font-size: 20px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: 24px;
+                   @media screen and (max-width: 768px){
+                      font-size: 16px;
+                      font-weight: 400;
+                      line-height: 20px;
+                   }
+              }
+          }
+        }
+
+        .accrodion-{{ section.id }}{
+          grid-column: 2/-1;
+          .pd-tabs-wrapper {
+              margin-bottom: 40px;
+              @media screen and (max-width: 768px){
+                margin-bottom: 20px;
+              }
+              .pd-tab-summery {
+                  margin-bottom: 12px;
+
+                  h2 {
+                      color: #111827;
+                      font-size: 20px;
+                      line-height: 24px;
+                      font-weight: 600;
+                      cursor: pointer;
+                      @media screen and (max-width: 768px){
+                        font-size: 18px;
+                        font-weight: 400;
+                      }
+                  }
+
+              }
+              .pd-tab-details {
+                  color: #374151;
+                  font-size: 16px;
+                  line-height: 150%;
+                  letter-spacing: -0.32px;
+                @media screen and (max-width: 768px){
+                  font-size: 13px;
+                  line-height: 16px; /* 123.077% */
+                  letter-spacing: -0.26px;
+                }
+              }
+          }
+
+
+          .pd-tab-icons {
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: flex-end;
+                  position: relative;
+
+                  .plus{
+                    position: absolute;
+                    /* transition: .4s; */
+                  }
+                  .minus{
+                    position: absolute;
+                    visibility: hidden;
+                    /* transition: .4s; */
+                  }
+                }
+
+
+            .pd-tabs-wrapper.active{
+                  .pd-tab-icons {
+                    .plus{
+                      /* visibility: hidden; */
+                      transition: all .4s;
+                      transform: rotate(-180deg);
+                    }
+                    .minus{
+                      visibility: visible;
+                      /* transition: .4s; */
+                      transform: rotate(0);
+                  }
+                }
+              }
+        }
+
+
+
+        @media screen and (max-width: 768px) {
+    .mobile-only {
+      display: block!important;
+    }
+    .desktop-only {
+      display: none!important;
+    }
+  }
+
+      }
+
+
+
+
+
+            @media screen and (max-width: 768px){
+              .section-container--{{ section.id }}{
+                margin-top: {{ section.settings.margin_top_mobile | append:'px' }};
+                margin-bottom: {{ section.settings.margin_bottom_mobile | append:'px'  }};
+                padding-top: {{ section.settings.padding_top_mobile | append:'px' }};
+                padding-bottom: {{ section.settings.padding_bottom_mobile | append:'px' }};
+              }
+
+            }
+</style>
+<section class="section-container--{{ section.id }}">
+  <div class="section-wrapper--{{ section.id }} page-width">
+    <div class="faq-left">
+      <h1>{{ section.settings.title }}</h1>
+      <div class="accrodion-{{ section.id }} mobile-only">
+        {% for block in section.blocks %}
+          <div class="pd-tabs-wrapper">
+            <div class="pd-tab-summery">
+              <h2>
+                {{ block.settings.title }}
+                <div class="pd-tab-icons">
+                  {% render 'tab-icons', name: 'plus' %}
+                  {% comment %}{% render 'tab-icons', name: 'minus' %}{% endcomment %}
+                </div>
+              </h2>
+            </div>
+            <div class="pd-tab-details">
+              {{ block.settings.content }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="question-block">
+        <h5>Still Have Questions?</h5>
+        <p>Contact Us at <span>contact@glamgelnails.com</span> </p>
+        <!-- <a href="#" class="question-button">Contact Our Team</a> -->
+      </div>
+    </div>
+    <div class="accrodion-{{ section.id }} accrodion-desktop-{{ section.id }} desktop-only">
+      {% for block in section.blocks %}
+        <div class="pd-tabs-wrapper">
+          <div class="pd-tab-summery">
+            <h2>
+              {{ block.settings.title }}
+              <div class="pd-tab-icons">
+                {% render 'tab-icons', name: 'plus' %}
+                {% comment %}{% render 'tab-icons', name: 'minus' %}{% endcomment %}
+              </div>
+            </h2>
+          </div>
+          <div class="pd-tab-details">
+            {{ block.settings.content }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<script>
+  document.addEventListener("DOMContentLoaded", e => {
+    new Accordion('.accrodion-{{ section.id }}', {
+      closeAll: true,
+      initOpenIndex: 1,
+      duration: 500,
+      activeClass: 'active'
+    })
+    new Accordion('.accrodion-desktop-{{ section.id }}', {
+      closeAll: true,
+      initOpenIndex: 1,
+      duration: 500,
+      activeClass: 'active'
+    })
+  })
+</script>
+{% schema %}
+{
+  "name": "Maze Product Faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 20
+    }
+  ],
+  "blocks": [
+     {
+      "name": "Faq",
+      "type": "faq",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maze Product Faq"
+    }
+  ]
+}
+{% endschema %}

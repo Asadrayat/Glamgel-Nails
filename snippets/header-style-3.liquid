@@ -1,0 +1,189 @@
+<style>
+  #shopify-section-{{ section.id}} {
+    background: #fff;
+  }
+  .header-style-2-container {
+    position: relative;
+  }
+  .header-style-2-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0px, 1fr) {{ section.settings.logo_width_desktop | append: 'px' }} minmax(0px, 1fr);
+    grid-gap: 40px;
+    align-items: stretch;
+  }
+
+  .hs2-first-layer-ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: start;
+    align-items: center;
+    gap: 58px;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  .hs2-icons-section {
+    justify-self: flex-end;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .hs2-icons-section a{
+    text-decoration: none;
+    display: flex;
+  }
+  .hs2-icons-section a svg{
+    width: 28px;
+  }
+  .hs2-logo-section {
+    text-decoration: none;
+  }
+  .hs2-logo-section img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .hs2-shop-name{
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+  .event-none{
+    pointer-events: none;
+  }
+  .header-style-2-icons-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    justify-self: flex-end;
+  }
+
+  @media(min-width: 1750px) {
+    .hs2-menu-medium-device {
+        display: none !important;
+    }
+    .hs2-menu-small-device {
+        display: none !important;
+    }
+  }
+  @media(max-width: 1749px) {
+    .hs2-menu-small-device {
+          display: none !important;
+    }
+    .hs2-menu-large-device {
+        display: none !important;
+    }
+  }
+
+  @media(max-width: 1549px) {
+    .hs2-menu-medium-device {
+        display: none !important;
+    }
+    .hs2-menu-small-device {
+        display: flex !important;
+    }
+  }
+</style>
+
+{{ 'gelico-dropdown-menu-style-2.css' | asset_url | stylesheet_tag }}
+{{ 'gelico-megamenu-style-2.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  # assign enable_megamenu = section.settings.enable_megamenu | strip | strip_html | downcase | remove: ' ' | split: ','
+  # assign menuLength = section.settings.main_menu.links.size
+  assign offset_large_device = 4
+  assign offset_medium_device = 4
+  assign offset_small_device = 3
+%}
+
+<div class="header-style-2-container">
+  <div class="page-width">
+    <div class="header-style-2-wrapper">
+      <div class="header-style-2-menu-wrapper">
+        <ul class="hs2-first-layer-ul hs2-menu-large-device">
+          {% render 'gelico-header-style-2-menu', section: section, offset: offset_large_device %}
+        </ul>
+        <ul class="hs2-first-layer-ul hs2-menu-medium-device">
+          {% render 'gelico-header-style-2-menu', section: section, offset: offset_medium_device %}
+        </ul>
+        <ul class="hs2-first-layer-ul hs2-menu-small-device">
+          {% render 'gelico-header-style-2-menu', section: section, offset: offset_small_device %}
+        </ul>
+      </div>
+      <a href="/" class="hs2-logo-section">
+        {% liquid
+          assign logo_desktop = section.settings.logo_desktop
+          assign logo_mobile = section.settings.logo_mobile
+          if logo_mobile == blank
+            assign logo_mobile = logo_desktop
+          endif
+        %}
+        {% unless logo_desktop == blank %}
+          <picture>
+            <source media="(min-width:650px)" srcset="{{ logo_desktop | image_url: width: logo_desktop.width }}">
+            {{ logo_mobile | image_url: width: logo_mobile.width | image_tag: loading: 'lazy' }}
+          </picture>
+        {% else %}
+          <h2 class="hs2-shop-name">{{ section.settings.shop_name }}</h2>
+        {% endunless %}
+      </a>
+      <div class="header-style-2-icons-wrapper">
+        <div class="hs2-localization-wrapper">
+          {% render 'gelico-localization', section: section %}
+        </div>
+        <div class="hs2-icons-section">
+          {% unless section.settings.search_icon == blank %}
+            <a href="/search">
+              {{ section.settings.search_icon }}
+            </a>
+          {% else %}
+            <a href="/search">
+              {% render 'gelico-icons', name: 'search' %}
+            </a>
+          {% endunless %}
+          {% unless section.settings.usre_icon == blank %}
+            <a href="/account">
+              {{ section.settings.usre_icon }}
+            </a>
+          {% else %}
+            <a href="/account">
+              {% render 'gelico-icons', name: 'user' %}
+            </a>
+          {% endunless %}
+          {% unless section.settings.cart_icon == blank %}
+            <a href="/cart">
+              {{ section.settings.cart_icon }}
+            </a>
+          {% else %}
+            <a href="/cart">
+              {% render 'gelico-icons', name: 'cart' %}
+            </a>
+          {% endunless %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let megamenuSecondLayerLi = document.querySelectorAll('.hs2-megamenu-li');
+
+  megamenuSecondLayerLi.forEach((megamenuLi) => {
+    let megamenuThirdLayerLi = megamenuLi.querySelectorAll('.hs2-megamenu-second-layer-li'),
+      megamenuSecondlayerUl = megamenuLi.querySelector('.hs2-megamenu-second-layer-ul'),
+      maxTLHeight = 0;
+
+    console.log(megamenuThirdLayerLi);
+    megamenuThirdLayerLi.forEach((li) => {
+      if (maxTLHeight < li.clientHeight) {
+        maxTLHeight = li.clientHeight;
+      }
+    });
+    megamenuSecondlayerUl.style.maxHeight = maxTLHeight + 25 + 'px';
+  });
+</script>

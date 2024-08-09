@@ -1,0 +1,35 @@
+.mobile-only {
+  display: none;
+}
+.desktop-only {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+  .desktop-only {
+    display: none;
+  }
+}
+
+
+/* Collection Page Start */
+.facets-wrapper.page-width {
+    background-color: #FFEBFF;
+}
+/* Collection Page End */
+
+/* Product Page Start */
+h2.product-breadcrumb {
+    color: #d1d5db;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin: 0 0 16px 0;
+    /* letter-spacing: -0.32px; */
+}
+/* Product Page End */

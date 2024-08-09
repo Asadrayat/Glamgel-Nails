@@ -1,0 +1,292 @@
+<style>
+  .section-container--{{ section.id }}{
+    margin-top: {{ section.settings.margin_top | append:'px' }};
+    margin-bottom: {{ section.settings.margin_bottom | append:'px' }};
+    padding-top: {{ section.settings.padding_top | append:'px' }};
+    padding-bottom: {{ section.settings.padding_bottom | append:'px' }};
+    background-color: {{ section.settings.bg-color }};
+    overflow: hidden;
+  }
+  .section-wrapper--{{ section.id }}.page-width {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    user-select: none;
+    @media screen and (max-width: 768px){
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    h2, p {
+      margin-block: 0;
+      font-family: Satoshi;
+    }
+    .nail-left {
+        align-self: center;
+
+        h1 {
+          color:  #111827;
+          font-size: 42px;
+          line-height: 46px; /* 112.5% */
+          @media screen and (max-width: 768px){
+            font-size: 32px;
+            line-height: 36px; /* 112.5% */
+            margin-top: 32px;
+            margin-bottom: 24px;
+          }
+        }
+
+
+        .pd-tabs-wrapper {
+            margin-bottom: 40px;
+            @media screen and (max-width: 768px){
+              margin-bottom: 20px;
+            }
+        }
+        .pd-tab-summery h2 {
+              color: var(--Content-Base-primary, #111827);
+              font-family: Satoshi;
+              font-size: 24px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 28px;
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              cursor: pointer;
+              user-select: none;
+             @media screen and (max-width: 768px){
+                font-size: 20px;
+                line-height: 24px;
+             }
+
+            span {
+                color: #909;
+                font-family: Satoshi;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 14px;
+                height: 28px;
+                width: 28px;
+                display: flex;
+                border-radius: var(--Line-Height-Heading-H5, 32px);
+                border: 1px solid #FFD1FF;
+                background: #FFEBFF;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .pd-tab-details {
+            color: var(--Content-Base-secondary, #374151);
+            font-family: Satoshi;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 150%;
+            /* letter-spacing: -0.32px; */
+            margin-top: 10px;
+            margin-left: 40px;
+            @media screen and (max-width: 768px){
+                font-size: 13px;
+                line-height: 16px;
+             }
+        }
+
+    }
+    .nail-right {
+      line-height: 0;
+      text-align: end;
+     @media(max-width:768px){
+       text-align: center;
+     }
+
+      img {
+            height: auto;
+            max-width: 100%;
+             @media(max-width:768px){
+               max-width: 70%;
+             }
+        }
+    }
+  }
+
+
+  @media screen and (max-width: 768px){
+    .section-container--{{ section.id }}{
+      margin-top: {{ section.settings.margin_top_mobile | append:'px' }};
+      margin-bottom: {{ section.settings.margin_bottom_mobile | append:'px'  }};
+      padding-top: {{ section.settings.padding_top_mobile | append:'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_mobile | append:'px' }};
+    }
+
+  }
+</style>
+<section class="section-container--{{ section.id }}">
+  <div class="section-wrapper--{{ section.id }} page-width">
+    <div class="nail-left">
+      <h1>{{ section.settings.title }}</h1>
+      <div class="accrodion-{{ section.id }}">
+        {% for block in section.blocks %}
+          <div class="pd-tabs-wrapper">
+            <div class="pd-tab-summery">
+              <h2>
+                <span>{{ forloop.index | prepend: '0' }} </span> {{ block.settings.title }}
+              </h2>
+            </div>
+            <div class="pd-tab-details">
+              {{ block.settings.content }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="nail-right">
+      {{ section.settings.image | image_url: width: section.settings.image.width | image_tag }}
+    </div>
+  </div>
+</section>
+<script>
+  document.addEventListener("DOMContentLoaded", e => {
+    new Accordion('.accrodion-{{ section.id }}', {
+      closeAll: true,
+      initOpenIndex: 1,
+      duration: 500,
+      activeClass: 'active'
+    })
+  })
+</script>
+{% schema %}
+{
+  "name": "Maze Nails",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Background Color",
+      "default": "#FFEBFF"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Step",
+      "type": "step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maze Nails"
+    }
+  ]
+}
+{% endschema %}

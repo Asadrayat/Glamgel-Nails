@@ -1,0 +1,80 @@
+{% case name %}
+  {% when 'search' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+      <path d="M21 21.5L16.65 17.15M19 11.5C19 15.9183 15.4183 19.5 11 19.5C6.58172 19.5 3 15.9183 3 11.5C3 7.08172 6.58172 3.5 11 3.5C15.4183 3.5 19 7.08172 19 11.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'user' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+      <path d="M20 21.5C20 20.1044 20 19.4067 19.8278 18.8389C19.44 17.5605 18.4395 16.56 17.1611 16.1722C16.5933 16 15.8956 16 14.5 16H9.5C8.10444 16 7.40665 16 6.83886 16.1722C5.56045 16.56 4.56004 17.5605 4.17224 18.8389C4 19.4067 4 20.1044 4 21.5M16.5 8C16.5 10.4853 14.4853 12.5 12 12.5C9.51472 12.5 7.5 10.4853 7.5 8C7.5 5.51472 9.51472 3.5 12 3.5C14.4853 3.5 16.5 5.51472 16.5 8Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'cart' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+      <path d="M5.00014 14.5H18.1359C19.1487 14.5 19.6551 14.5 20.0582 14.3112C20.4134 14.1448 20.7118 13.8777 20.9163 13.5432C21.1485 13.1633 21.2044 12.66 21.3163 11.6534L21.9013 6.38835C21.9355 6.08088 21.9525 5.92715 21.9031 5.80816C21.8597 5.70366 21.7821 5.61697 21.683 5.56228C21.5702 5.5 21.4155 5.5 21.1062 5.5H4.50014M2 2.5H3.24844C3.51306 2.5 3.64537 2.5 3.74889 2.55032C3.84002 2.59463 3.91554 2.66557 3.96544 2.75376C4.02212 2.85394 4.03037 2.98599 4.04688 3.2501L4.95312 17.7499C4.96963 18.014 4.97788 18.1461 5.03456 18.2462C5.08446 18.3344 5.15998 18.4054 5.25111 18.4497C5.35463 18.5 5.48694 18.5 5.75156 18.5H19M7.5 22H7.51M16.5 22H16.51M8 22C8 22.2761 7.77614 22.5 7.5 22.5C7.22386 22.5 7 22.2761 7 22C7 21.7239 7.22386 21.5 7.5 21.5C7.77614 21.5 8 21.7239 8 22ZM17 22C17 22.2761 16.7761 22.5 16.5 22.5C16.2239 22.5 16 22.2761 16 22C16 21.7239 16.2239 21.5 16.5 21.5C16.7761 21.5 17 21.7239 17 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'plus' %}
+    <!--
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="9"
+        height="9"
+        viewBox="0 0 9 9"
+        fill="none"
+        class="{{ class }}"
+      >
+        <line y1="4.5" x2="9" y2="4.5" stroke="black"/>
+        <line x1="4.5" y1="9" x2="4.5" y2="2.18557e-08" stroke="black"/>
+      </svg>
+    -->
+    <svg class="{{ class }}" xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+      <path d="M9.99996 4.66669V16.3334M9.99996 16.3334L15.8333 10.5M9.99996 16.3334L4.16663 10.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'minus' %}
+    <!--
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="9"
+        height="1"
+        viewBox="0 0 9 1"
+        fill="none"
+        class="{{ class }}"
+      >
+        <line y1="0.5" x2="9" y2="0.5" stroke="black"/>
+      </svg>
+    -->
+    <svg class="{{ class }}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M9.99967 15.8333L9.99967 4.16665M9.99967 4.16665L4.16634 9.99998M9.99967 4.16665L15.833 9.99998" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'breadcumb' %}
+    <svg width="25px" height="25px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <path stroke="#535358" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h22M5 16h22M5 24h22"/>
+    </svg>
+  {% when 'close' %}
+    <svg
+      class="icon icon-close"
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg"
+      width="22"
+      height="22"
+      viewBox="0 0 22 22"
+      fill="none"
+    >
+      <path d="M21.0003 20.7982L1.20215 1" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M20.7982 1.20178L1 21" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  {% when 'plus-menu' %}
+    <svg class="plus-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M6 9L12 15L18 9" stroke="#070707" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  {% when 'minus-menu' %}
+    <svg
+      class="minus-icon-new"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+    >
+      <path d="M6 15L12 9L18 15" stroke="#070707" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+{% endcase %}

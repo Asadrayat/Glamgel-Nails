@@ -1,0 +1,329 @@
+<style>
+  .gelico-mbl-header{
+    display: none;
+  }
+  .hs1-desktop-header{
+    padding: 8px 0;
+  }
+  @media (max-width: 1200px) {
+    .hs1-desktop-header {
+      display: none;
+    }
+    .gelico-mbl-header{
+      display: block;
+    }
+  }
+</style>
+
+{{ 'predictive-searches.css' | asset_url | stylesheet_tag }}
+
+<div class="hs1-desktop-header">
+  {% case section.settings.header_style %}
+    {% when 'style-1' %}
+      {% render 'header-style-1', section: section %}
+    {% when 'style-2' %}
+      {% render 'header-style-2', section: section %}
+    {% when 'style-3' %}
+      {% render 'header-style-3', section: section %}
+  {% endcase %}
+</div>
+<div class="gelico-mbl-header">
+  {% render 'gelico-mobile-menu', section: section %}
+</div>
+
+{% render 'predictive-search-form', section: section %}
+
+
+<script>
+  const drawerOpener = document.querySelector("[drawer-opener]");
+  const drawerCloser = document.querySelector("[drawer-closer]");
+  drawerOpener.addEventListener("click", (e)=>{
+    document.body.toggleAttribute('drawer-opened');
+    document.body.style.overflow = "hidden";
+  })
+  drawerCloser.addEventListener("click", (e)=>{
+    document.body.toggleAttribute('drawer-opened');
+    document.body.style.overflow = "auto";
+  })
+</script>
+
+<script>
+  
+  const searchDrawerOpeners = document.querySelectorAll("[aria-label='search-icon']");
+  const searchDrawerClosers = document.querySelectorAll("[close-search-drawer]");
+  
+  searchDrawerOpeners.forEach(opener => {
+    opener.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.body.toggleAttribute('search-drawer-opened');
+      document.body.style.overflow = "hidden";
+    });
+  });
+  
+  searchDrawerClosers.forEach(closer => {
+    closer.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.body.toggleAttribute('search-drawer-opened');
+      document.body.style.overflow = "auto";
+    });
+  });
+
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const expandIconContainers = document.querySelectorAll(".expand-icon-container");
+  
+      expandIconContainers.forEach(container => {
+          container.addEventListener("click", function (e) {
+              e.preventDefault();
+              const parentItem = this.closest("li");
+              const subMenu = parentItem.querySelector("ul");
+              const parentClass = parentItem.parentElement.classList;
+  
+              let sameLevelItems;
+              if (parentClass.contains("parent-m")) {
+                  sameLevelItems = document.querySelectorAll("#mobile-navigation ul.parent-m > li.open");
+              } else if (parentClass.contains("child-m")) {
+                  sameLevelItems = document.querySelectorAll("#mobile-navigation ul.child-m > li.open");
+              } else {
+                  sameLevelItems = document.querySelectorAll("#mobile-navigation ul.grandchild-m > li.open");
+              }
+  
+              sameLevelItems.forEach(openItem => {
+                  if (openItem !== parentItem) {
+                      openItem.classList.remove("open");
+                      const nestedUl = openItem.querySelector("ul");
+                      if (nestedUl) {
+                          nestedUl.style.maxHeight = `${nestedUl.scrollHeight}px`;
+                          window.getComputedStyle(nestedUl).maxHeight; // Trigger reflow
+                          nestedUl.style.maxHeight = "0";
+                      }
+                  }
+              });
+  
+              if (subMenu) {
+                  const isCurrentlyOpen = parentItem.classList.contains("open");
+                  parentItem.classList.toggle("open", !isCurrentlyOpen);
+                  if (isCurrentlyOpen) {
+                      subMenu.style.maxHeight = `${subMenu.scrollHeight}px`;
+                      window.getComputedStyle(subMenu).maxHeight; // Trigger reflow
+                      subMenu.style.maxHeight = "0";
+                  } else {
+                      subMenu.style.maxHeight = `${subMenu.scrollHeight}px`;
+                  }
+              }
+  
+              e.stopPropagation();
+          });
+      });
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Galiko Header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "header_style",
+      "label": "Header Style",
+      "options": [
+        {
+          "value": "style-1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style-2",
+          "label": "Style 2"
+        },
+        {
+          "value": "style-3",
+          "label": "Style 3"
+        }
+      ],
+      "default": "style-1"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Select Main Menu"
+    },
+    {
+      "type": "textarea",
+      "id": "enable_megamenu",
+      "label": "Enable Megamenu",
+      "default": "Spring Shop, Designers, New Arrivals",
+      "info": "Spring Shop, Designers, New Arrivals"
+    },
+    {
+      "type": "select",
+      "id": "megamenu_image_position",
+      "label": "Megamenu Image Position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Header Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_desktop",
+      "label": "Logo Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_mobile",
+      "label": "Logo Mobile"
+    },
+    {
+      "type": "text",
+      "id": "shop_name",
+      "label": "Shop Name",
+      "info": "Shop Name",
+      "default": "GALIKO"
+    },
+    {
+      "type": "range",
+      "id": "logo_width_desktop",
+      "label": "Logo Width Desktop",
+      "default": 100,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "label": "Logo Width Mobile",
+      "default": 100,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__3.content",
+      "info": "t:sections.header.settings.header__4.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__5.content",
+      "info": "t:sections.header.settings.header__6.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "Header Icons"
+    },
+    {
+      "type": "html",
+      "id": "search_icon",
+      "label": "Search Icon",
+      "info": "Copy Paste Search Icon SVG HTML Code"
+    },
+    {
+      "type": "html",
+      "id": "usre_icon",
+      "label": "User Icon",
+      "info": "Copy Paste User Icon SVG HTML Code"
+    },
+    {
+      "type": "html",
+      "id": "cart_icon",
+      "label": "Cart Icon",
+      "info": "Copy Paste Cart Icon SVG HTML Code"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "megamenu-image",
+      "name": "Megamenu Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "Menu Title",
+          "default": "Spring Shop",
+          "info": "Spring Shop, Designers, New Arrivals"
+        },
+        {
+          "type": "header",
+          "content": "First image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image1",
+          "label": "First Image"
+        },
+        {
+          "type": "url",
+          "id": "url1",
+          "label": "First Image URL"
+        },
+        {
+          "type": "header",
+          "content": "Second image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Second Image"
+        },
+        {
+          "type": "url",
+          "id": "url2",
+          "label": "Second Image URL"
+        }
+      ]
+    },
+    {
+      "type": "icons",
+      "name": "Icons",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Galiko Header"
+    }
+  ]
+}
+{% endschema %}

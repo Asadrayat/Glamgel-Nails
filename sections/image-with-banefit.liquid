@@ -1,0 +1,292 @@
+{% assign id = section.id %}
+<style>
+   .section-container--{{ section.id }}{
+     margin-top: {{ section.settings.margin_top | append:'px' }};
+     margin-bottom: {{ section.settings.margin_bottom | append:'px' }};
+     padding-top: {{ section.settings.padding_top | append:'px' }};
+     padding-bottom: {{ section.settings.padding_bottom | append:'px' }};
+     overflow: hidden;
+     /* background: #FFEBFF; */
+   }
+   .wrapper-{{ id }}{
+      position: relative;
+   }
+    .image-wrapper-{{ id }} {
+      width: 728px;
+      height: 728px;
+      margin: auto;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    .image-wrapper-{{ id }} img{
+      max-width: 58%;
+      height: auto;
+      object-fit: cover;
+    }
+  .text-{{ id }} {
+    position: absolute;
+    color: var(--Content-Base-secondary, #374151);
+    font-family: Minakoe;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    font-size: 28px;
+  }
+  .iwb-text-4 {
+    bottom: 85px;
+    left: 0;
+    transform: translateX(-60%);
+  }
+  .iwb-text-3 {
+    bottom: 180px;
+    right: 0;
+    transform: translateX(50%);
+  }
+  .iwb-text-2 {
+    top: 192px;
+    left: 0;
+    transform: translateX(-60%);
+  }
+  .iwb-text-1 {
+    top: 94px;
+    right: 0;
+    transform: translatex(70%);
+  }
+  .icon-{{ id }} {
+    width: 80px;
+    height: 80px;
+  }
+  .icon-{{ id }}.left {
+    position: absolute;
+    left: 0;
+    bottom: 30%;
+  }
+  .icon-{{ id }}.right {
+    position: absolute;
+    right: 5%;
+    top: 30%;
+  }
+  @media (min-width: 768px) and (max-width: 1500px) {
+    .image-wrapper-{{ id }} {
+      width: 528px;
+      height: 528px;
+    }
+    .image-wrapper-{{ id }} img{
+      max-width: 58%;
+      height: auto;
+      object-fit: cover;
+    }
+    .text-{{ id }} {
+      line-height: 38px;
+      font-size: 24px;
+    }
+  .iwb-text-4 {
+    bottom: 62px;
+    left: 0;
+    transform: translateX(-75%);
+  }
+  .iwb-text-3 {
+    bottom: 150px;
+    right: 0;
+    transform: translateX(70%);
+  }
+  .iwb-text-2 {
+      top: 160px;
+      left: 0;
+      transform: translateX(-80%);
+  }
+  .iwb-text-1 {
+    top: 50px;
+    right: 0;
+    transform: translatex(65%);
+  }
+  .icon-{{ id }} {
+    width: 80px;
+    height: 80px;
+  }
+  .icon-{{ id }}.left {
+    position: absolute;
+    left: 0;
+    bottom: 30%;
+  }
+  .icon-{{ id }}.right {
+    position: absolute;
+    right: 7%;
+    top: 30%;
+  }
+  }
+   @media screen and (max-width: 768px){
+     .section-container--{{ section.id }}{
+       margin-top: {{ section.settings.margin_top_mobile | append:'px' }};
+       margin-bottom: {{ section.settings.margin_bottom_mobile | append:'px'  }};
+       padding-top: {{ section.settings.padding_top_mobile | append:'px' }};
+       padding-bottom: {{ section.settings.padding_bottom_mobile | append:'px' }};
+     }
+    .image-wrapper-{{ id }} {
+      width: 100%;
+      height: auto;
+    }
+    .image-wrapper-{{ id }} img{
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+     .text-{{ id }} {
+       display: none;
+     }
+  }
+</style>
+<section class="section-container--{{ id }}">
+  <div class="container-{{ id }} page-width">
+    <div class="wrapper-{{ id }}">
+      <div class="image-wrapper-{{ id }}">
+        {% if section.settings.img %}
+          {{ section.settings.img | image_url: width: section.settings.img.width | image_tag }}
+        {% endif %}
+        {% for block in section.blocks %}
+          <p class="text-{{ id }} iwb-text-{{ forloop.index }}">{{ block.settings.title }}</p>
+        {% endfor %}
+      </div>
+      <div class="icon-{{ id }} left">
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <path d="M0 39.9993C22.097 39.9993 40.0003 22.0975 40.0003 0C40.0003 22.0975 57.9023 39.9993 80 39.9993C57.9199 39.9993 40.0003 57.9025 40.0003 80C40.0003 57.9025 22.097 39.9993 0 39.9993Z" fill="#FFC2FF"/>
+        </svg>
+      </div>
+      <div class="icon-{{ id }} right">
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <path d="M0 39.9993C22.097 39.9993 40.0003 22.0975 40.0003 0C40.0003 22.0975 57.9023 39.9993 80 39.9993C57.9199 39.9993 40.0003 57.9025 40.0003 80C40.0003 57.9025 22.097 39.9993 0 39.9993Z" fill="#FFC2FF"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with benefit",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "name": "text",
+      "type": "text",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefits"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Benefits"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with benefit"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,255 @@
+{% assign id = section.id %}
+
+<style>
+    .container-{{ id }} {
+     margin-top: {{ section.settings.margin_top }}px;
+     padding-top: {{ section.settings.padding_top }}px;
+     padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    .custom_logo-{{ section.id }}{
+      width: 100%;
+      background: #FFD6FF;
+      color: #000;
+    }
+    .block-{{ id }} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 16px;
+      padding: 10px 0 10px 28px;
+      text-wrap: nowrap;
+    }
+    .block-{{ id }} svg{
+      width: 37.84px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .acc_wrapper-{{ id }} {
+       display: flex;
+       align-items: center;
+       gap: 30px;
+       position: absolute;
+       top: 50%;
+       transform: translateY(-50%);
+       overflow: hidden;
+       animation: marquee 30s linear infinite;
+    }
+    .wrapper-{{ id }}{
+         width: 100%;
+         margin: auto;
+        position: relative;
+        height: 96px;
+        overflow: hidden;
+    }
+    .wrapper-{{ id }} h3 {
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 22px;
+        color: rgb(199, 199, 199);
+        letter-spacing: 3px;
+        text-align: center;
+    }
+    .wrapper-{{ id }} p {
+        color: #000;
+        font-family: Satoshi;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px; /* 120% */
+        text-transform: uppercase;
+     }
+    .acc_wrapper-{{ id }} img {
+        width: 100%;
+        height: 30px;
+        object-fit: cover;
+     }
+    .text_m-{{ id }} {
+       display: none;
+    }
+       @keyframes marquee {
+       0% { left: 0; }
+       100% { left: -100%; }
+    }
+
+  @media screen and (max-width: 990px){
+    .container-{{ id }} {
+       margin-top: {{ section.settings.margin_top-m }}px;
+       padding-top: {{ section.settings.padding_top-m }}px;
+       padding-bottom: {{ section.settings.padding_bottom-m }}px;
+    }
+    .block-{{ id }} {
+      font-size: 14px;
+      padding: 4px 0 1px;
+    }
+    .block-{{ id }} svg{
+      width: 22px;
+      height: 24px;
+    }
+   .custom_logo-{{ section.id }}{
+     padding-top: {{ section.settings.padding_top-m }}px;
+     padding-bottom: {{ section.settings.padding_bottom-m }}px;
+     background-position: 100%;
+     background-size: 100%;
+     width: 100%;
+    }
+    .wrapper-{{ id }} {
+      height: 48px;
+    }
+    .wrapper-{{ id }} h3 {
+      width: 90%;
+      margin: auto;
+      position: relative;
+      height: 80px;
+      overflow: hidden;
+    }
+    .wrapper-{{ id }} h3 {
+        display: none;
+    }
+    .wrapper-{{ id }} p{
+        display: none;
+    }
+    .acc_wrapper-{{ id }} img {
+        padding: 0 10px;
+        height: 20px;
+     }
+    .text_m-{{ id }} {
+        display: block;
+        margin: 0 auto;
+        font-size: 7px;
+        line-height: 10px;
+        color: rgb(161, 161, 161);
+        text-align: center;
+        width: 70%;
+    }
+  }
+</style>
+
+<div class="container-{{ id }}">
+  <div class="custom_logo-{{ section.id }}">
+    <div class="wrapper-{{ id }}">
+      <h3>{{ section.settings.title }}</h3>
+      <div class="acc_wrapper-{{ id }}">
+        {% for i in (1..100) %}
+          {% for block in section.blocks %}
+            <div class="block-{{ id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="38" height="40" viewBox="0 0 38 40" fill="none">
+                <path d="M29.1775 10.9349C36.2669 5.00016 38.9792 1.99249 37.6902 1.50912C37.0188 1.26744 36.7234 1.32112 35.5419 1.88505C33.2593 3.01292 24.9614 10.1024 24.9614 10.9349C24.9614 12.0896 27.7542 12.1165 29.1775 10.9349Z" fill="black"/>
+                <path d="M10.5677 11.1497C11.4539 10.559 11.4002 10.4515 7.96285 6.71884C6.13679 4.70466 4.63307 3.44253 3.53206 2.95916C2.02824 2.28781 1.30316 3.2009 1.89395 3.95281C6.9424 10.4515 9.03701 12.1702 10.5677 11.1497Z" fill="black"/>
+                <path d="M34.4676 19.9041C32.8296 19.4207 24.4514 16.7622 23.8338 16.5205C23.5384 16.4131 23.3235 15.876 23.2161 14.963C22.3299 8.1421 20.9333 1.13306 20.3156 0.354299C19.8591 -0.236487 18.3016 -0.0485096 17.8719 0.622838C17.4423 1.29419 15.4551 8.08839 14.2735 13.0295L13.495 16.252C-1.75814 21.0857 -2.59066 20.9783 4.31079 23.0997L10.4068 24.9795C13.871 26.0537 13.9512 26.0802 14.1392 26.9396C14.4078 28.1749 16.1533 34.1904 16.8246 37.0638C18.2479 43.2402 21.1484 39.4269 23.6995 27.9334L24.2903 25.3018C24.6125 25.248 26.6531 25.0601 35.4612 23.1534C37.4753 22.6969 36.8845 20.6023 34.4676 19.9041ZM30.6544 21.22C30.4396 21.4079 24.5585 22.8312 23.4038 22.8312C22.0074 22.8312 21.6852 23.5025 20.1008 29.8132C19.0535 33.9756 18.9732 34.0559 18.3824 31.639C17.6574 28.6045 16.1801 25.0601 15.9921 24.2276C15.831 23.4757 14.3272 22.9386 8.4999 21.5422C5.57296 20.844 5.11644 20.6023 6.21732 20.2801C7.58687 19.8773 14.1661 17.729 14.918 17.729C15.643 17.729 16.2607 17.1919 16.4755 16.3863L18.5701 8.22266C18.9461 6.7994 18.9463 6.7994 19.9936 12.3582C21.2021 18.6151 21.0675 18.3463 23.001 18.7491C25.4179 19.2594 30.8961 21.0051 30.6544 21.22Z" fill="black"/>
+                <path d="M25.767 28.3631C25.767 28.9539 32.8564 36.1239 33.85 36.5267C35.9446 37.386 36.4817 36.2579 34.8167 34.4587C30.3321 29.5444 25.767 26.4833 25.767 28.3631Z" fill="black"/>
+                <path d="M5.08958 30.0818C-0.0663729 33.5728 -0.657187 34.3784 1.92079 34.3784C3.18292 34.3784 11.1584 28.8465 10.9167 28.1214C10.5408 26.9935 8.74158 27.5843 5.08958 30.0818Z" fill="black"/>
+              </svg>
+              {{ block.settings.text | escape }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+      <p>{{ section.settings.desc }}</p>
+    </div>
+  </div>
+  <p class="text_m-{{ id }}">{{ section.settings.desc }}</p>
+</div>
+{% schema %}
+{
+  "name": "Custom marqueee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 4,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Spacing (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top-m",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 0
+    }
+  ],
+  "blocks":[
+    {
+       "name": "text",
+       "type": "text",
+       "settings": [
+         {
+           "type": "text",
+           "id": "text",
+           "label": "Text"
+         }
+       ]
+     }
+  ],
+  "presets": [
+    {
+      "name": "Custom marqueee"
+    }
+  ]
+}
+{% endschema %}

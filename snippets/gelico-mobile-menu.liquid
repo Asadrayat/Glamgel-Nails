@@ -1,0 +1,236 @@
+<style>
+  .gelico-mbl-header-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 8px;
+  }
+  .gelico-mbl-left{
+    font-size: 0;
+    line-height: 0;
+    display: flex;
+    gap: 12px;
+  }
+  .gelico-mbl-left button{
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+  }
+  .gelico-mbl-logo-section{
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+  }
+  .gelico-mbl-logo-section img{
+    max-width: {{ section.settings.logo_width_desktop }}px;
+    height: auto;
+  }
+  .gelico-mbl-icons-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .gelico-mbl-icons-section a{
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .mobile-drawer{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    background: #fff;
+    transform: translate(-100%);
+    visibility: hidden;
+    transition-property: transform,visibility;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+  }
+  [drawer-opened] .mobile-drawer{
+    transform: translate(0);
+    visibility: visible;
+  }
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding-block: 1rem;
+  }
+  .mobile-drawer-header > div{
+    font-size: 0;
+    line-height: 0;
+  }
+
+
+  /* Mobile drawer menu */
+  .menu-drawer__navigation-custom ul {
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+  }
+
+  ul.parent-m li a {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: #000000;
+      display: inline-block;
+  }
+
+  .expand-icon-container {
+      display: inline-block;
+  }
+
+  .has-sub-menu,
+  .has-double-sub-menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .expand-icon-container-wrapper {
+      display: flex;
+      align-items: center;
+      position: relative;
+  }
+
+  .parent-m ul,
+  .child-m ul,
+  .grandchild-m ul {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s ease-in-out;
+  }
+
+  .open > ul {
+      max-height: 2000px !important; /* Adjust as needed */
+  }
+  .expand-icon-container-wrapper .plus-icon{
+    transition: all 0.5s ease-in-out;
+  }
+  .open > div > .expand-icon-container > .expand-icon-container-wrapper > .plus-icon {
+      transform: rotate(180deg);
+  }
+  ul.child-m, ul.grandchild-m{
+    margin-left: 14px;
+  }
+  li.open{
+    /* padding-bottom: 0 !important;
+    border-bottom: none !important; */
+  }
+  .menu-drawer__menu  li{
+    padding: 14px 0;
+  }
+  .menu-drawer__menu  li:not(:last-child){
+    border-bottom: 1px solid #D0D0D0;
+  }
+  .menu-drawer__menu  li:last-child{
+    padding-block-end: 0;
+  }
+
+   /* Mobile drawer menu */
+
+  .mobile-drawer-icons{
+    margin: 30px 0 0;
+  }
+  .drawer-icons-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .drawer-icons-top a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .drawer-icons-top a span{
+    color: #000;
+    font-size: 13px;
+    line-height: normal;
+  }
+  .drawer-icons-bottom{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 25px 0 0;
+  }
+  .drawer-icons-bottom a{
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+  }
+</style>
+
+<div class="gelico-mbl-header-wrapper page-width">
+  <div class="gelico-mbl-left">
+    <button drawer-opener title="hamburger" aria-label="hamburger-icon">
+      {% render 'gelico-icons', name: 'breadcumb' %}
+    </button>
+    {% render 'gelico-drawer-menu', section: section %}
+    {% unless section.settings.search_icon == blank %}
+      <a href="#" aria-label="search-icon">
+        {{ section.settings.search_icon }}
+      </a>
+    {% else %}
+      <a href="#" aria-label="search-icon">
+        {% render 'gelico-icons', name: 'search' %}
+      </a>
+    {% endunless %}
+  </div>
+  <a href="/" class="gelico-mbl-logo-section" aria-label="logo">
+    {% liquid
+      assign logo_desktop = section.settings.logo_desktop
+      assign logo_mobile = section.settings.logo_mobile
+      if logo_mobile == blank
+        assign logo_mobile = logo_desktop
+      endif
+    %}
+    {% unless logo_desktop == blank %}
+      <picture>
+        <source media="(min-width:650px)" srcset="{{ logo_desktop | image_url: width: logo_desktop.width }}">
+        {{ logo_mobile | image_url: width: logo_mobile.width | image_tag: loading: 'lazy' }}
+      </picture>
+    {% else %}
+      <h2 class="gelico-shop-name">{{ section.settings.shop_name }}</h2>
+    {% endunless %}
+  </a>
+  <div class="gelico-mbl-icons-section">
+    <a
+      href="https://www.glamgelnails.com/pages/wishlist"
+      class="header__icon h-wishlist-icon wishlist-page-widget"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        overflow="unset"
+        class="icon"
+      >
+        <path d="M12.4869 22C12.2364 21.9968 11.9918 21.9232 11.7804 21.7875C8.18822 19.57 5.48518 17.3766 3.2783 14.8705C2.01853 13.5287 1.04215 11.942 0.408559 10.207C-0.730606 6.84675 0.5832 2.9211 3.46882 1.07256C4.78425 0.221399 6.35422 -0.134962 7.90363 0.0659208C9.45304 0.266804 10.8831 1.01212 11.9431 2.17126C12.1376 2.37977 12.3162 2.60031 12.4869 2.81685C12.7194 2.51694 12.97 2.2317 13.2371 1.96275C13.8816 1.32075 14.6473 0.816306 15.4888 0.479444C16.3303 0.142583 17.2302 -0.0198119 18.1351 0.00192686C19.0214 0.0266866 19.8936 0.23235 20.6992 0.606539C21.5048 0.980728 22.2271 1.51571 22.8227 2.17928C25.0693 4.63732 25.6012 7.62065 24.3072 10.8045C23.6255 12.404 22.6611 13.8647 21.4613 15.1151C19.3548 17.3836 16.9713 19.3724 14.3683 21.0336C14.019 21.2662 13.6578 21.4907 13.3006 21.7113L13.1934 21.7795C12.9825 21.9174 12.738 21.9937 12.4869 22Z" stroke="#be0ad6"></path>
+      </svg>
+      <span class="wishlist-h-count wishlist-total-count" data-total="0">0</span></a
+    >
+    {% unless section.settings.cart_icon == blank %}
+      <a class="new-header-cart-icon" href="/cart" aria-label="Cart Icon">
+        {{ section.settings.cart_icon }}
+      </a>
+    {% else %}
+      <a class="new-header-cart-icon" href="/cart" aria-label="Cart Icon">
+        {% render 'gelico-icons', name: 'cart' %}
+      </a>
+    {% endunless %}
+  </div>
+</div>

@@ -1,0 +1,47 @@
+{% liquid
+  assign enable_megamenu = section.settings.enable_megamenu | strip | strip_html | downcase | remove: ' ' | split: ','
+  assign menuLength = section.settings.main_menu.links.size
+%}
+
+{% for link in section.settings.main_menu.links limit: offset %}
+  {% liquid
+    assign filrstLabeTitle = link.title | strip | downcase | remove: ' '
+    assign isMegaEnable = false
+    if enable_megamenu contains filrstLabeTitle
+      assign isMegaEnable = true
+    endif
+  %}
+  <li class="hs2-first-layer-li {% if isMegaEnable %}hs2-megamenu-li{% else %}hs2-dropdown-li{% endif %}">
+    <div class="hs2-menu-icon-wrapper">
+      {% unless link.links == blank %}
+        <a href="{{ link.url }}" class="hs2-first-layer-a ">{{ link.title }}</a>
+        <div class="hs2-icon-wrapper">
+          {% render 'gelico-icons', name: 'plus', class: 'first-layer hs2-plus-icon' %}
+          {% render 'gelico-icons', name: 'minus', class: 'first-layer hs2-minus-icon' %}
+        </div>
+      {% else %}
+        <a href="{{ link.url }}" class="hs2-first-layer-a">{{ link.title }}</a>
+      {% endunless %}
+    </div>
+    {% unless link.links == blank %}
+      {% if isMegaEnable %}
+        {% render 'gelico-header-megamenu-style-2', link: link, section: section %}
+
+      {% else %}
+        {% render 'gelico-header-dropdown-menu-style-2', link: link %}
+      {% endif %}
+    {% endunless %}
+  </li>
+{% endfor %}
+{% if menuLength > 7 %}
+  <li class="hs2-first-layer-li hs2-dropdown-li">
+    <div class="hs2-menu-icon-wrapper">
+      <a href="{{ link.url }}" class="hs2-first-layer-a event-none">MORE</a>
+      <div class="hs2-icon-wrapper">
+        {% render 'gelico-icons', name: 'plus', class: 'first-layer hs2-plus-icon' %}
+        {% render 'gelico-icons', name: 'minus', class: 'first-layer hs2-minus-icon' %}
+      </div>
+    </div>
+    {% render 'gelico-header-more-menu', section: section, offset: offset, hs: 'hs2' %}
+  </li>
+{% endif %}
