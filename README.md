@@ -3,9 +3,11 @@
 <a href="https://www.glamgelnails.com/">Visit The Store</a>
 
 
-## Screenshots
+## Previews
 
-![Homepage](https://i.ibb.co/5jTbG8v/screencapture-smileoptics-2024-05-09-12-27-38.png)
+![Homepage](https://i.ibb.co/Cm54Hv5/screencapture-glamgelnails-2024-08-09-19-04-09.png)
+![Product page](https://i.ibb.co/syKc0r6/screencapture-glamgelnails-products-lavender-dream-2024-08-09-19-04-47.png)
+![Collection Page](https://i.ibb.co/5cvSmst/screencapture-glamgelnails-collections-all-2024-08-09-19-05-38.png)
 
 
 
