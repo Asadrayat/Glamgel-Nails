@@ -1,0 +1,56 @@
+<div class="custom__bundle__wrap__" data-main-variant-id="{{ product.selected_or_first_available_variant.id }}">
+  <div class="top__wrap__">
+    <h3>{{ block.settings.title }}</h3>
+    <p>{{ block.settings.subtext }}</p>
+  </div>
+  <div class="box__wrap__">
+    <h4 class="nail__wraps__title__">{{ 'Select Your Wraps' }}</h4>
+    <div class="product-form__pick-image" data-bundle-picker-one>
+      <div class="image__wrap" data-image-container>
+        {% unless block.settings.placeholder_img == blank %}
+          {{ block.settings.placeholder_img | image_url: width: block.settings.placeholder_img.width | image_tag }}
+        {% endunless %}
+      </div>
+      <div class="info__wrap__">
+        <h3 class="placeholder__text__">{{ block.settings.placeholder_text }}</h3>
+        <button class="placeeholder_btn__ " data-placeholder-button>SELECT A STYLE</button>
+      </div>
+      <button class="product-form__redo is-hidden">
+       {% render 'all-icons', name: 'redo' %}
+      </button>
+    </div>
+    <div class="product-form__pick-image" data-bundle-picker-two>
+      <div class="image__wrap" data-image-container>
+        {% unless block.settings.placeholder_img == blank %}
+          {{ block.settings.placeholder_img | image_url: width: block.settings.placeholder_img.width | image_tag }}
+        {% endunless %}
+      </div>
+      <div class="info__wrap__">
+        <h3 class="placeholder__text__">{{ block.settings.placeholder_text }}</h3>
+        <button class="placeeholder_btn__ " data-placeholder-button>SELECT A STYLE</button>
+      </div>
+      <button class="product-form__redo is-hidden">
+        {% render 'all-icons', name: 'redo' %}
+      </button>
+    </div>
+    <div class="product-form__pick-image" data-bundle-picker-three>
+      <div class="image__wrap" data-image-container>
+        {% unless block.settings.placeholder_img == blank %}
+          {{ block.settings.placeholder_img | image_url: width: block.settings.placeholder_img.width | image_tag }}
+        {% endunless %}
+      </div>
+      <div class="info__wrap__">
+        <h3 class="placeholder__text__">{{ block.settings.placeholder_text }}</h3>
+        <button class="placeeholder_btn__ " data-placeholder-button>SELECT A STYLE</button>
+      </div>
+      <button class="product-form__redo is-hidden">
+        {% render 'all-icons', name: 'redo' %}
+      </button>
+    </div>
+  </div>
+  <div class="pd-form-wrapper">
+    <button class="pd-add-to-card disabled" data-bundle-cta-btn>
+      ADD TO CART - {{ product.selected_or_first_available_variant.price | money }}
+    </button>
+  </div>
+</div>

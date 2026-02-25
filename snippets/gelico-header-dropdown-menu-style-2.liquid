@@ -1,0 +1,34 @@
+<div class="hs2-second-layer-wrapper">
+  <ul class="hs2-second-layer-ul">
+    {% for childLink in link.links %}
+      <li class="hs2-second-layer-li">
+        <div class="hs2-menu-icon-wrapper">
+          {% unless childLink.links == blank %}
+            <a class="hs2-second-layer-a event-none" href="{{ childLink.url }}">
+              {{- childLink.title -}}
+            </a>
+            <div class="hs2-icon-wrapper">
+              {% render 'gelico-icons', name: 'plus', class: 'second-layer hs2-plus-icon' %}
+              {% render 'gelico-icons', name: 'minus', class: 'second-layer hs2-minus-icon' %}
+            </div>
+          {% else %}
+            <a class="hs2-second-layer-a" href="{{ childLink.url }}">{{ childLink.title }}</a>
+          {% endunless %}
+        </div>
+        {% unless childLink.links == blank %}
+          <div class="hs2-third-layer-wrapper">
+            <ul class="hs2-third-layer-ul">
+              {% for grandChildLink in childLink.links %}
+                <li class="hs2-third-layer-li">
+                  <a class="hs2-third-layer-a" href="{{ grandChildLink.url }}">
+                    {{- grandChildLink.title -}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endunless %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

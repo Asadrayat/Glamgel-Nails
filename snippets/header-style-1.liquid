@@ -1,0 +1,179 @@
+<style>
+  #shopify-section-{{ section.id}} {
+    background: #fff;
+  }
+  .header-style-1-container {
+    position: relative;
+  }
+  .hs1-top-wrapper {
+    display: grid;
+    grid-template-columns: 1fr {{ section.settings.logo_width_desktop | append: 'px' }} 1fr;
+    align-items: center;
+  }
+  .hs1-icons-section {
+    justify-self: flex-end;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .hs1-icons-section a{
+    text-decoration: none;
+  }
+  .hs1-icons-section a svg{
+    width: 28px;
+  }
+  .hs1-logo-section {
+    text-decoration: none;
+  }
+  .hs1-logo-section img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .hs1-shop-name{
+    color: #000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+  .event-none{
+    pointer-events: none;
+  }
+</style>
+
+{{ 'gelico-dropdown-menu.css' | asset_url | stylesheet_tag }}
+{{ 'gelico-megamenu.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign enable_megamenu = section.settings.enable_megamenu | strip | strip_html | downcase | remove: ' ' | split: ','
+  assign menuLength = section.settings.main_menu.links.size
+  assign offset_large_device = 5
+  # assign offset_medium_device = 5
+%}
+
+<div class="header-style-1-container">
+  <div class="page-width">
+    <div class="header-style-1-wrapper">
+      <div class="hs1-top-wrapper">
+        <div class="hs1-localization-section">
+          <div class="hs1-localization-wrapper">
+            {% render 'gelico-localization', section: section %}
+          </div>
+        </div>
+        <a href="/" class="hs1-logo-section">
+          {% liquid
+            assign logo_desktop = section.settings.logo_desktop
+            assign logo_mobile = section.settings.logo_mobile
+            if logo_mobile == blank
+              assign logo_mobile = logo_desktop
+            endif
+          %}
+          {% unless logo_desktop == blank %}
+            <picture>
+              <source media="(min-width:650px)" srcset="{{ logo_desktop | image_url: width: logo_desktop.width }}">
+              {{ logo_mobile | image_url: width: logo_mobile.width | image_tag: loading: 'lazy' }}
+            </picture>
+          {% else %}
+            <h2 class="hs1-shop-name">{{ section.settings.shop_name }}</h2>
+          {% endunless %}
+        </a>
+        <div class="hs1-icons-section">
+          {% unless section.settings.search_icon == blank %}
+            <a href="/search">
+              {{ section.settings.search_icon }}
+            </a>
+          {% else %}
+            <a href="/search">
+              {% render 'gelico-icons', name: 'search' %}
+            </a>
+          {% endunless %}
+          {% unless section.settings.usre_icon == blank %}
+            <a href="/account">
+              {{ section.settings.usre_icon }}
+            </a>
+          {% else %}
+            <a href="/account">
+              {% render 'gelico-icons', name: 'user' %}
+            </a>
+          {% endunless %}
+          {% unless section.settings.cart_icon == blank %}
+            <a href="/cart">
+              {{ section.settings.cart_icon }}
+            </a>
+          {% else %}
+            <a href="/cart">
+              {% render 'gelico-icons', name: 'cart' %}
+            </a>
+          {% endunless %}
+        </div>
+      </div>
+      <div class="hs1-menu-wrapper">
+        <ul class="hs1-first-layer-ul">
+          {% for link in section.settings.main_menu.links limit: offset_large_device %}
+            {% liquid
+              assign filrstLabeTitle = link.title | strip | downcase | remove: ' '
+              assign isMegaEnable = false
+              if enable_megamenu contains filrstLabeTitle
+                assign isMegaEnable = true
+              endif
+            %}
+            <li class="hs1-first-layer-li {% if isMegaEnable %}hs1-megamenu-li{% else %}hs1-dropdown-li{% endif %}">
+              <div class="hs1-menu-icon-wrapper">
+                {% unless link.links == blank %}
+                  <a href="{{ link.url }}" class="hs1-first-layer-a event-none">{{ link.title }}</a>
+                  <div class="hs1-icon-wrapper">
+                    {% render 'gelico-icons', name: 'plus', class: 'first-layer hs1-plus-icon' %}
+                    {% render 'gelico-icons', name: 'minus', class: 'first-layer hs1-minus-icon' %}
+                  </div>
+                {% else %}
+                  <a href="{{ link.url }}" class="hs1-first-layer-a">{{ link.title }}</a>
+                {% endunless %}
+              </div>
+              {% unless link.links == blank %}
+                {% if isMegaEnable %}
+                  {% render 'gelico-header-megamenu', link: link, section: section %}
+
+                {% else %}
+                  {% render 'gelico-header-dropdown-menu', link: link %}
+                {% endif %}
+              {% endunless %}
+            </li>
+          {% endfor %}
+          {% if menuLength > 7 %}
+            <li class="hs1-first-layer-li hs1-dropdown-li">
+              <div class="hs1-menu-icon-wrapper">
+                <a href="{{ link.url }}" class="hs1-first-layer-a event-none">MORE</a>
+                <div class="hs1-icon-wrapper">
+                  {% render 'gelico-icons', name: 'plus', class: 'first-layer hs1-plus-icon' %}
+                  {% render 'gelico-icons', name: 'minus', class: 'first-layer hs1-minus-icon' %}
+                </div>
+              </div>
+              {% render 'gelico-header-more-menu', section: section, offset: offset_large_device, hs: 'hs1' %}
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let megamenuSecondLayerLi = document.querySelectorAll('.hs1-megamenu-li');
+
+  megamenuSecondLayerLi.forEach((megamenuLi) => {
+    let megamenuThirdLayerLi = megamenuLi.querySelectorAll('.hs1-megamenu-second-layer-li'),
+      megamenuSecondlayerUl = megamenuLi.querySelector('.hs1-megamenu-second-layer-ul'),
+      maxTLHeight = 0;
+
+    console.log(megamenuThirdLayerLi);
+    megamenuThirdLayerLi.forEach((li) => {
+      if (maxTLHeight < li.clientHeight) {
+        maxTLHeight = li.clientHeight;
+      }
+    });
+    megamenuSecondlayerUl.style.maxHeight = maxTLHeight + 25 + 'px';
+  });
+</script>

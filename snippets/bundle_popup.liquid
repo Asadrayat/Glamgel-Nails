@@ -1,0 +1,29 @@
+{% assign collection = settings.bundle__collection %}
+
+<div class="bundle_popup__wrap__ is-visible_" data-bundle-popup>
+  <div class="container__">
+    <div class="top__wrap__">
+      <h2>Select Style</h2>
+    </div>
+    <div class="select-wraps__grid">
+      {% for product in collection.products %}
+        <button
+          class="bundle__product__card"
+          data-id="{{ product.selected_or_first_available_variant.id }}"
+          data-product-image="{{ product.featured_image | image_url: width: 600 }}"
+          data-title="{{ product.title }}"
+          data-budle-product-card
+        >
+          <div class="bpc__image">
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: product.featured_image.width | image_tag }}
+            {% endif %}
+          </div>
+          <p class="bpc__title">{{ product.title }}</p>
+        </button>
+      {% endfor %}
+    </div>
+    <button class="close__btn__" data-bundle-popup-close>{% render 'all-icons', name: 'close' %}</button>
+    <button class="cta__bundle_button__ is-disabled" data-cta-bundle-btn>Select this style</button>
+  </div>
+</div>

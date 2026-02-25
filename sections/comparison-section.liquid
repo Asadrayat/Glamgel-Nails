@@ -1,0 +1,527 @@
+{% liquid
+  assign id = section.id
+%}
+
+<style>
+  .sec-{{ id }} {
+    box-sizing: border-box;
+    margin-top: {{section.settings.margin_top | append: 'px'}};
+    margin-bottom: {{section.settings.margin_bottom | append: 'px'}};
+    padding-top: {{section.settings.padding_top | append: 'px'}};
+    padding-bottom: {{section.settings.padding_bottom | append: 'px'}};
+    background: {{ section.settings.background_color }};
+
+    .heading-wrapper__ {
+      text-align: center;
+      margin: 0 auto 48px;
+      max-width: 800px;
+    }
+
+    .heading__ {
+        color: #000;
+        text-align: center;
+
+        /* Headings/H2 */
+        font-family: var(--font-heading-family, Minakoe);
+        font-size: var(--Font-Size-Heading-H2, 32px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: var(--Line-Height-Heading-H2, 36px); /* 112.5% */
+        margin: 0 0 16px;
+      @media(max-width: 768px) {
+        font-size: 28px;
+        line-height: 36px;
+        margin: 0 0 12px;
+      }
+    }
+
+    .heading__ span {
+      display: block;
+        font-family: var(--font-heading-family, Minakoe);
+        font-size: var(--Font-Size-Heading-H2, 32px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: var(--Line-Height-Heading-H2, 36px); /* 112.5% */
+      color: #7F2748;
+    }
+
+    .description__ {
+        color: #000;
+        text-align: center;
+        text-shadow: 0 0
+        /* Paragraph/Large */
+        font-family: var(--font-body-family, "Cabinet Grotesk");
+        font-size: var(--Font-Size-Paragraph-Large, 16px);
+        font-style: normal;
+        font-weight: 800;
+        line-height: var(--Line-Height-Paragraph-Large, 24px); /* 150% */
+        text-shadow: 0 0 black;
+        max-width: 450px;
+        margin: auto;
+    }
+
+    .comparison-wrapper__ {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        max-width: 800px;
+        margin: 0 auto 48px;
+        align-items: end;
+
+      @media(max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .comparison-card__ {
+      background: #FFF;
+      border: 2px solid #E8E8E8;
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      overflow: hidden;
+      height: max-content;
+      @media(max-width: 600px) {
+        padding: 32px 24px;
+      }
+    }
+
+    .comparison-card__--featured {
+      padding: 0 0;
+      border: 0.3px solid #ff1b8d45;
+      position: relative;
+      box-shadow: 0px 15px 25px rgba(82.25, 7.07, 35.26, 0.20);
+      background: #E80A5D; 
+    }
+    .comparison-card__.comparison-card__--featured .content__ {
+        padding: 40px 32px;
+        {% comment %} border-radius: 16px; {% endcomment %}
+        background: linear-gradient(0deg, #FFF6FA 0%, #FFF6FA 100%);
+        position: relative;
+        border-radius: 16px 16px 0 0;
+        &:before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: ;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }          
+    }
+    .badge__ {
+      font-family: var(--font-body-family);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #FFF;
+      margin: 0;
+      text-shadow: 0 0 white;
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .card-title__ {
+      font-family: var(--font-heading-family);
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 36px;
+      margin: 0 0 24px;
+      color: #000;
+    }
+
+    .price_wrap {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        margin-block: 32px 48px;
+        gap: 8px;
+    }
+    .price__ {
+        font-family: var(--font-heading-family, Minakoe);
+        font-size: var(--Font-Size-Heading-H1, 48px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: 70%;
+        @media(max-width: 600px) {
+            font-size: 48px;
+        }
+    }
+    .price__--salon {
+        color: var(--Content-Error-base, #DC2626);
+    }
+
+    .price__--home {
+      color: #2D9F5D;
+    }
+
+    .price-label__ {
+        color: #000;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 145%;
+        margin: 0;
+    }
+
+    .features-list__ {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .feature-item__ {
+        font-family: var(--font-body-family);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 20px;
+        color: #000;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .feature-icon__ {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .feature-icon__--negative {
+      color: #E63946;
+    }
+
+    .feature-icon__--positive {
+      color: #8B2D5B;
+    }
+
+    .cta-wrapper__ {
+      text-align: center;
+    }
+
+    .cta_button {
+      width: max-content;
+      margin: auto;
+    }
+  }
+
+  @media(max-width: 600px) {
+    .sec-{{ id }} {
+      margin-top: {{section.settings.margin_top_m | append: 'px'}};
+      margin-bottom: {{section.settings.margin_bottom_m | append: 'px'}};
+      padding-top: {{section.settings.padding_top_m | append: 'px'}};
+      padding-bottom: {{section.settings.padding_bottom_m | append: 'px'}};
+    }
+  }
+</style>
+
+<div class="sec-{{ id }}" id="{{ section.settings.sec_id }}">
+  <div class="{% unless section.settings.full_width %}page-width{% endunless %}">
+    <div class="heading-wrapper__">
+      {% unless section.settings.heading == blank %}
+        <h2 class="heading__">
+          {{ section.settings.heading }}
+          {% unless section.settings.heading_accent == blank %}
+            <span>{{ section.settings.heading_accent }}</span>
+          {% endunless %}
+        </h2>
+      {% endunless %}
+      {% unless section.settings.description == blank %}
+        <p class="description__">{{ section.settings.description }}</p>
+      {% endunless %}
+    </div>
+
+    <div class="comparison-wrapper__">
+      {% for block in section.blocks %}
+        <div
+          class="comparison-card__ {% if block.settings.featured %}comparison-card__--featured{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.featured %}
+            <p class="badge__">{{ block.settings.badge }}</p>
+          {% endif %}
+          <div class="content__">
+            {% unless block.settings.title == blank %}
+              <h4 class="card-title__">{{ block.settings.title }}</h4>
+            {% endunless %}
+            {% unless block.settings.price_label == blank or block.settings.price == blank %}
+              <div class="price_wrap">
+                <div class="price__ {% if block.settings.featured %}price__--home{% else %}price__--salon{% endif %}">
+                  {{ block.settings.price }}
+                </div>
+
+                <p class="price-label__">{{ block.settings.price_label }}</p>
+              </div>
+            {% endunless %}
+            {% if block.settings.features != blank %}
+              <ul class="features-list__">
+                {% assign features_array = block.settings.features | split: '|' %}
+                {% for feature in features_array %}
+                  {% assign feature_parts = feature | split: '::' %}
+                  {% assign feature_type = feature_parts[0] %}
+                  {% assign feature_text = feature_parts[1] %}
+                  <li class="feature-item__">
+                    <span class="feature-icon__ {% if feature_type == 'negative' %}feature-icon__--negative{% else %}feature-icon__--positive{% endif %}">
+                      {% if feature_type == 'negative' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M10.0803 1.84198C10.5063 -0.24875 13.4939 -0.24875 13.9199 1.84198C14.2119 3.27498 15.9141 3.89452 17.0589 2.98449C18.7292 1.65676 21.0178 3.57711 20.0003 5.45257C19.3029 6.73802 20.2086 8.30675 21.6705 8.3455C23.8035 8.40203 24.3222 11.3442 22.3372 12.1268C20.9767 12.6632 20.6622 14.4471 21.7572 15.4165C23.3548 16.8309 21.861 19.4181 19.8374 18.7418C18.4503 18.2782 17.0627 19.4425 17.2784 20.889C17.5931 22.9993 14.7858 24.0211 13.6703 22.2022C12.9058 20.9555 11.0944 20.9555 10.3299 22.2022C9.21442 24.0211 6.40706 22.9993 6.72177 20.889C6.93747 19.4425 5.54985 18.2782 4.16282 18.7418C2.13916 19.4181 0.645402 16.8309 2.243 15.4165C3.338 14.4471 3.02345 12.6632 1.66293 12.1268C-0.322052 11.3442 0.196727 8.40203 2.32968 8.3455C3.79162 8.30675 4.69733 6.73802 3.99992 5.45257C2.9824 3.57711 5.27098 1.65676 6.94125 2.98449C8.08607 3.89452 9.78824 3.27498 10.0803 1.84198Z" fill="#FDE3ED"/>
+                          <path d="M16 8.00024L9 15.0002M9 8.00024L16 15.0002" stroke="#7F2748" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {% else %}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M10.0803 1.84198C10.5063 -0.24875 13.4939 -0.24875 13.9199 1.84198C14.2119 3.27498 15.9141 3.89452 17.0589 2.98449C18.7292 1.65676 21.0178 3.57711 20.0003 5.45257C19.3029 6.73802 20.2086 8.30675 21.6705 8.3455C23.8035 8.40203 24.3222 11.3442 22.3372 12.1268C20.9767 12.6632 20.6622 14.4471 21.7572 15.4165C23.3548 16.8309 21.861 19.4181 19.8374 18.7418C18.4503 18.2782 17.0627 19.4425 17.2784 20.889C17.5931 22.9993 14.7858 24.0211 13.6703 22.2022C12.9058 20.9555 11.0944 20.9555 10.3299 22.2022C9.21442 24.0211 6.40706 22.9993 6.72177 20.889C6.93747 19.4425 5.54985 18.2782 4.16282 18.7418C2.13916 19.4181 0.645402 16.8309 2.243 15.4165C3.338 14.4471 3.02345 12.6632 1.66293 12.1268C-0.322052 11.3442 0.196727 8.40203 2.32968 8.3455C3.79162 8.30675 4.69733 6.73802 3.99992 5.45257C2.9824 3.57711 5.27098 1.65676 6.94125 2.98449C8.08607 3.89452 9.78824 3.27498 10.0803 1.84198Z" fill="#520723"/>
+                          <path d="M15.4287 8.84216L9.74452 14.5264L7.5791 12.361" stroke="white" stroke-width="2.52632" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      {% endif %}
+                    </span>
+                    <span>{{ feature_text }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% unless section.settings.button_text == blank %}
+      <div class="cta-wrapper__">
+        <a href="{{ section.settings.button_url }}" class="cta_button">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {% endunless %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Pricing Comparison",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width Section",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "sec_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF5FF"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Glam Gel Nails are"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading Accent Line",
+      "default": "Perfect for You"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "See how Glam Gel Nails transforms your beauty budget from budget-buster to budget-smart"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Gel Nail Strips"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Mobile"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison",
+      "name": "Comparison Card",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "featured",
+          "label": "Featured Card",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text (Featured Only)",
+          "default": "MONEY SAVER"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$80"
+        },
+        {
+          "type": "text",
+          "id": "price_label",
+          "label": "Price Label",
+          "default": "/ Per Visit"
+        },
+        {
+          "type": "textarea",
+          "id": "features",
+          "label": "Features (Format: type::text|type::text)",
+          "info": "Use 'negative::' for X icon or 'positive::' for star icon. Separate with |",
+          "default": "negative::Monthly: $170 (2 applications)|negative::Yearly: $1920|negative::Travel Time + waiting|negative::Limited appointment slots"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pricing Comparison",
+      "blocks": [
+        {
+          "type": "comparison",
+          "settings": {
+            "featured": false,
+            "title": "Traditional Salon",
+            "price": "$80",
+            "price_label": "/ Per Visit",
+            "features": "negative::Monthly: $170 (2 applications)|negative::Yearly: $1920|negative::Travel Time + waiting|negative::Limited appointment slots"
+          }
+        },
+        {
+          "type": "comparison",
+          "settings": {
+            "featured": true,
+            "badge": "MONEY SAVER",
+            "title": "GGN at Home",
+            "price": "$14",
+            "price_label": "/ Per Application",
+            "features": "positive::Monthly: $28 (2 applications)|positive::Yearly: $336|positive::Apply anytime, anywhere|positive::15-minute application"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

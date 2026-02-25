@@ -1,0 +1,143 @@
+{% liquid
+  assign imageBlocks = section.blocks | where: 'type', 'megamenu-image'
+  assign imageBlockSize = 0
+  assign imageSize = 0
+
+  for block in imageBlocks
+    assign menu_title = block.settings.menu_title | strip | downcase
+    assign link_title = link.title | strip | downcase
+    if menu_title == link_title
+      for i in (1..2)
+        assign imageId = 'image' | append: i
+        unless block.settings[imageId] == blank
+          assign imageSize = imageSize | plus: 1
+        endunless
+      endfor
+      assign imageBlockSize = imageBlockSize | plus: 1
+    endif
+  endfor
+
+  assign imageSize = imageSize | at_most: 2
+
+  if imageSize > 0
+    if imageSize == 1
+      if section.settings.megamenu_image_position == 'left'
+        assign grid_columns = 'minmax(0px, 2fr) minmax(0px, 5fr)'
+      else
+        assign grid_columns = 'minmax(0px, 5fr) minmax(0px, 2fr)'
+      endif
+      assign image_grid_colunmns = 'minmax(0px, 1fr)'
+    elsif imageSize == 2
+      if section.settings.megamenu_image_position == 'left'
+        assign grid_columns = 'minmax(0px, 3fr) minmax(0px, 4fr)'
+      else
+        assign grid_columns = 'minmax(0px, 4fr) minmax(0px, 3fr)'
+      endif
+      assign image_grid_colunmns = 'minmax(0px, 1fr) minmax(0px, 1fr)'
+    endif
+  else
+    assign grid_columns = 'minmax(0px, 1fr)'
+  endif
+%}
+
+<div class="hs1-megamenu-container">
+  <div class="page-width">
+    <div class="hs1-megamenu-wrapper" style="grid-template-columns: {{ grid_columns }};">
+      {% if section.settings.megamenu_image_position == 'left' %}
+        {% if imageSize > 0 %}
+          <div class="hs1-mega-image-wrapper" style="grid-template-columns: {{ image_grid_colunmns }}">
+            {% for block in imageBlocks %}
+              {% if menu_title == link_title %}
+                {% for i in (1..2) %}
+                  {% liquid
+                    assign imageId = 'image' | append: i
+                    assign imageUrl = 'url' | append: i
+                    assign megamenu_image = block.settings[imageId]
+                    assign megamenu_image_url = block.settings[imageUrl]
+                  %}
+                  {% unless megamenu_image == blank %}
+                    <a href="{{ megamenu_image_url }}" class="hs1-mega-image-block">
+                      {{
+                        megamenu_image
+                        | image_url: width: 400, height: 440, crop: 'center', quality: 80, format: 'jpg'
+                        | image_tag: loading: 'lazy', class: 'hs1-mega-image'
+                      }}
+                    </a>
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="hs1-mega-list-wrapper">
+          <ul class="hs1-megamenu-second-layer-ul">
+            {% for childLink in link.links %}
+              <li class="hs1-megamenu-second-layer-li">
+                <a href="{{ childLink.url }}" class="hs1-megamenu-second-layer-a">{{ childLink.title | upcase }}</a>
+                {% unless childLink.links == blank %}
+                  <ul class="hs1-megamenu-third-layer-ul">
+                    {% for grandchildLink in childLink.links %}
+                      <li class="hs1-megamenu-third-layer-li">
+                        <a href="{{ grandchildLink.url }}" class="hs1-megamenu-third-layer-a">
+                          {{- grandchildLink.title | downcase -}}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endunless %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <div class="hs1-mega-list-wrapper">
+          <ul class="hs1-megamenu-second-layer-ul">
+            {% for childLink in link.links %}
+              <li class="hs1-megamenu-second-layer-li">
+                <a href="{{ childLink.url }}" class="hs1-megamenu-second-layer-a">{{ childLink.title | upcase }}</a>
+                {% unless childLink.links == blank %}
+                  <ul class="hs1-megamenu-third-layer-ul">
+                    {% for grandchildLink in childLink.links %}
+                      <li class="hs1-megamenu-third-layer-li">
+                        <a href="{{ grandchildLink.url }}" class="hs1-megamenu-third-layer-a">
+                          {{- grandchildLink.title | downcase -}}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endunless %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% if imageSize > 0 %}
+          <div class="hs1-mega-image-wrapper" style="grid-template-columns: {{ image_grid_colunmns }}">
+            {% for block in imageBlocks %}
+              {% if menu_title == link_title %}
+                {% for i in (1..2) %}
+                  {% liquid
+                    assign imageId = 'image' | append: i
+                    assign imageUrl = 'url' | append: i
+                    assign megamenu_image = block.settings[imageId]
+                    assign megamenu_image_url = block.settings[imageUrl]
+                  %}
+                  {% unless megamenu_image == blank %}
+                    <a href="{{ megamenu_image_url }}" class="hs1-mega-image-block">
+                      {{
+                        megamenu_image
+                        | image_url: width: 400, height: 440, crop: 'center', quality: 80, format: 'jpg'
+                        | image_tag: loading: 'lazy', class: 'hs1-mega-image'
+                      }}
+                    </a>
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>

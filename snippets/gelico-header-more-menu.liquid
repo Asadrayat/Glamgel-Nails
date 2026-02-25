@@ -1,0 +1,38 @@
+<div class="{{ hs }}-second-layer-wrapper">
+  <ul class="{{ hs }}-second-layer-ul">
+    {% for link in section.settings.main_menu.links offset: offset %}
+      <li class="{{ hs }}-second-layer-li">
+        <div class="{{ hs }}-menu-icon-wrapper">
+          {% unless link.links == blank %}
+            <a class="{{ hs }}-second-layer-a event-none" href="{{ link.url }}">
+              {{- link.title -}}
+            </a>
+            <div class="{{ hs }}-icon-wrapper">
+              {% liquid
+                assign plusIconClass = 'second-layer ' | append: hs | append: '-plus-icon'
+                assign minusIconClass = 'second-layer ' | append: hs | append: '-minus-icon'
+              %}
+              {% render 'gelico-icons', name: 'plus', class: plusIconClass %}
+              {% render 'gelico-icons', name: 'minus', class: minusIconClass %}
+            </div>
+          {% else %}
+            <a class="{{ hs }}-second-layer-a" href="{{ link.url }}">{{ link.title }}</a>
+          {% endunless %}
+        </div>
+        {% unless link.links == blank %}
+          <div class="{{ hs }}-third-layer-wrapper">
+            <ul class="{{ hs }}-third-layer-ul">
+              {% for grandChildLink in link.links %}
+                <li class="{{ hs }}-third-layer-li">
+                  <a class="{{ hs }}-third-layer-a" href="{{ grandChildLink.url }}">
+                    {{- grandChildLink.title -}}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endunless %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

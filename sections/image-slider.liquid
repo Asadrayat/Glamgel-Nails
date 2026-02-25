@@ -1,0 +1,531 @@
+{% liquid
+  assign id = section.id
+%}
+
+<style>
+  #shopify-section-{{ id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+  }
+
+  .container-{{ id }} {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .header-{{ id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 0;
+
+    @media(max-width: 768px) {
+      margin-bottom: 24px;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;      
+    }
+  }
+
+  .instagram-handle__ {
+    color: #000;
+    font-family: var(--font-heading-family);
+    font-size: var(
+    --Font-Size-Heading-H2, 32px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(
+    --Line-Height-Heading-H2, 36px);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    @media(max-width: 768px) {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+
+  .instagram-icon__ {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .follow-link__ {
+    border-radius: 40px;
+    border: 1px solid #E6E6E6;
+    display: flex;
+    padding: 6px 12px 6px 10px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    color: #000;
+    text-align: center;
+    font-family: var(--font-body-family, "Cabinet Grotesk");
+    font-size: var(--Font-Size-Paragraph-Large, 16px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: var(--Line-Height-Paragraph-Large, 24px);
+    transition: all 0.3s ease;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.7;
+      gap: 8px;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .wrapper-{{ id }} {
+    overflow: hidden;
+
+    .swiper-wrapper {
+      display: flex;
+    }
+
+    .swiper-slide {
+      height: auto;
+    }
+  }
+
+  .gallery-slide__ {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.border_radius }}px;
+    background: #F5F5F5;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+
+    {% if section.settings.aspect_ratio == 'portrait' %}
+      aspect-ratio: 4/5;
+    {% elsif section.settings.aspect_ratio == 'square' %}
+      aspect-ratio: 1/1;
+    {% else %}
+      aspect-ratio: auto;
+    {% endif %}
+  }
+
+  .gallery-slide__ img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .slide-overlay__ {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 1;
+    }
+  }
+
+  .instagram-logo__ {
+    width: 48px;
+    height: 48px;
+    color: #FFF;
+  }
+
+  @media screen and (max-width: 890px) {
+    #shopify-section-{{ id }} {
+      margin-top: {{ section.settings.margin_top_m }}px;
+      margin-bottom: {{ section.settings.margin_bottom_m }}px;
+      padding-top: {{ section.settings.padding_top_m }}px;
+      padding-bottom: {{ section.settings.padding_bottom_m }}px;
+    }
+  }
+</style>
+
+<section class="{% unless section.settings.full_width %}page-width{% endunless %}">
+  <div class="container-{{ id }}">
+    {% if section.settings.instagram_handle != blank or section.settings.show_follow_link %}
+      <div class="header-{{ id }}">
+        {% if section.settings.instagram_handle != blank %}
+          <h2 class="instagram-handle__">
+            {{ section.settings.instagram_handle }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.show_follow_link %}
+          <a href="{{ section.settings.instagram_url }}" class="follow-link__" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="1.5" y="1.5" width="21" height="21" rx="4.5" fill="url(#paint0_radial_15369_420884)"/>
+              <rect x="1.5" y="1.5" width="21" height="21" rx="4.5" fill="url(#paint1_radial_15369_420884)"/>
+              <rect x="1.5" y="1.5" width="21" height="21" rx="4.5" fill="url(#paint2_radial_15369_420884)"/>
+              <path d="M17.25 7.875C17.25 8.49632 16.7463 9 16.125 9C15.5037 9 15 8.49632 15 7.875C15 7.25368 15.5037 6.75 16.125 6.75C16.7463 6.75 17.25 7.25368 17.25 7.875Z" fill="white"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25C9.92893 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92893 15.75 12 15.75ZM12 14.25C13.2426 14.25 14.25 13.2426 14.25 12C14.25 10.7574 13.2426 9.75 12 9.75C10.7574 9.75 9.75 10.7574 9.75 12C9.75 13.2426 10.7574 14.25 12 14.25Z" fill="white"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 11.7C4.5 9.17976 4.5 7.91965 4.99047 6.95704C5.4219 6.11031 6.11031 5.4219 6.95704 4.99047C7.91965 4.5 9.17976 4.5 11.7 4.5H12.3C14.8202 4.5 16.0804 4.5 17.043 4.99047C17.8897 5.4219 18.5781 6.11031 19.0095 6.95704C19.5 7.91965 19.5 9.17976 19.5 11.7V12.3C19.5 14.8202 19.5 16.0804 19.0095 17.043C18.5781 17.8897 17.8897 18.5781 17.043 19.0095C16.0804 19.5 14.8202 19.5 12.3 19.5H11.7C9.17976 19.5 7.91965 19.5 6.95704 19.0095C6.11031 18.5781 5.4219 17.8897 4.99047 17.043C4.5 16.0804 4.5 14.8202 4.5 12.3V11.7ZM11.7 6H12.3C13.5849 6 14.4583 6.00117 15.1334 6.05633C15.7911 6.11006 16.1274 6.20745 16.362 6.32698C16.9265 6.6146 17.3854 7.07354 17.673 7.63803C17.7926 7.87263 17.8899 8.20893 17.9437 8.86656C17.9988 9.54169 18 10.4151 18 11.7V12.3C18 13.5849 17.9988 14.4583 17.9437 15.1334C17.8899 15.7911 17.7926 16.1274 17.673 16.362C17.3854 16.9265 16.9265 17.3854 16.362 17.673C16.1274 17.7926 15.7911 17.8899 15.1334 17.9437C14.4583 17.9988 13.5849 18 12.3 18H11.7C10.4151 18 9.54169 17.9988 8.86656 17.9437C8.20893 17.8899 7.87263 17.7926 7.63803 17.673C7.07354 17.3854 6.6146 16.9265 6.32698 16.362C6.20745 16.1274 6.11006 15.7911 6.05633 15.1334C6.00117 14.4583 6 13.5849 6 12.3V11.7C6 10.4151 6.00117 9.54169 6.05633 8.86656C6.11006 8.20893 6.20745 7.87263 6.32698 7.63803C6.6146 7.07354 7.07354 6.6146 7.63803 6.32698C7.87263 6.20745 8.20893 6.11006 8.86656 6.05633C9.54169 6.00117 10.4151 6 11.7 6Z" fill="white"/>
+              <defs>
+                <radialGradient id="paint0_radial_15369_420884" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9 17.25) rotate(-55.3758) scale(19.1397)">
+                  <stop stop-color="#B13589"/>
+                  <stop offset="0.79309" stop-color="#C62F94"/>
+                  <stop offset="1" stop-color="#8A3AC8"/>
+                </radialGradient>
+                <radialGradient id="paint1_radial_15369_420884" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(8.25 23.25) rotate(-65.1363) scale(16.9457)">
+                  <stop stop-color="#E0E8B7"/>
+                  <stop offset="0.444662" stop-color="#FB8A2E"/>
+                  <stop offset="0.71474" stop-color="#E2425C"/>
+                  <stop offset="1" stop-color="#E2425C" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="paint2_radial_15369_420884" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0.375001 2.25) rotate(-8.1301) scale(29.1682 6.23877)">
+                  <stop offset="0.156701" stop-color="#406ADC"/>
+                  <stop offset="0.467799" stop-color="#6A45BE"/>
+                  <stop offset="1" stop-color="#6A45BE" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+            </svg>
+            {{ section.settings.follow_text }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="wrapper-{{ id }} swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <a
+              href="{{ block.settings.link | default: section.settings.instagram_url }}"
+              class="gallery-slide__"
+              target="_blank"
+              rel="noopener"
+            >
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+              {% else %}
+                <div style="width: 100%; height: 100%; background: #E5E5E5;"></div>
+              {% endif %}
+
+              {% if section.settings.show_overlay %}
+                <div class="slide-overlay__">
+                  <svg class="instagram-logo__" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/>
+                  </svg>
+                </div>
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var swiper{{ id | replace: '-', '_' }} = new Swiper(".wrapper-{{ id }}.swiper", {
+      slidesPerView: 1.5,
+      spaceBetween: 12,
+      loop: {{ section.settings.enable_loop }},
+      autoplay: {{ section.settings.enable_autoplay | json }},
+      {% if section.settings.enable_autoplay %}
+      autoplay: {
+        delay: {{ section.settings.autoplay_delay | times: 1000 }},
+        disableOnInteraction: false,
+      },
+      {% endif %}
+      breakpoints: {
+        480: {
+          slidesPerView: 2.2,
+          spaceBetween: 16,
+        },
+        640: {
+          slidesPerView: 2.5,
+          spaceBetween: 16,
+        },
+        768: {
+          slidesPerView: 3.2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: {{ section.settings.slides_desktop }},
+          spaceBetween: 24,
+        },
+      },
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Instagram Gallery",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Instagram Settings"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram Handle",
+      "default": "@glamgelnails",
+      "info": "Display your Instagram username"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_follow_link",
+      "label": "Show Follow Link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "follow_text",
+      "label": "Follow Link Text",
+      "default": "Follow on Instagram"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram Profile URL",
+      "info": "Link to your Instagram profile"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link Color",
+      "default": "#E1306C"
+    },
+    {
+      "type": "header",
+      "content": "Slide Settings"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image Aspect Ratio",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "original",
+          "label": "Original"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Instagram Icon on Hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 0.1,
+      "label": "Slides Per View (Desktop)",
+      "default": 4.2
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Delay",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Mobile"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Instagram Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom Link",
+          "info": "Optional. Overrides the default Instagram profile link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Gallery",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

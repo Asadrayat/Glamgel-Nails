@@ -1,0 +1,526 @@
+{% liquid
+  assign id = section.id
+%}
+
+<style>
+  #shopify-section-{{ id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.background_color }};
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;    
+  }
+
+  .container-{{ id }} {
+    {% comment %} max-width: 1400px;
+    margin: 0 auto; {% endcomment %}
+  }
+
+  .heading-wrapper-{{ id }} {
+    text-align: center;
+    margin-bottom: 48px;
+
+    @media(max-width: 768px) {
+      margin-bottom: 32px;
+    }
+  }
+
+  .heading-{{ id }} {
+    color: #000;
+    text-align: center;
+    font-family: var(--font-family-Heading, Minakoe);
+    font-size: var(--Font-Size-Heading-H2, 32px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--Line-Height-Heading-H2, 36px);
+    max-width: 550px;
+    margin: 0 auto 16px;
+
+    @media(max-width: 768px) {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    @media(max-width: 600px) {
+      font-size: 28px;
+      line-height: 36px;
+    }
+  }
+
+  .heading-{{ id }} strong {
+    color: #7F2748;
+    font-family: var(--font-family-Heading, Minakoe);
+  }
+
+  .trust-badge__ {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .stars__ {
+    display: flex;
+    gap: 4px;
+  }
+
+  .star-icon__ {
+    width: 20px;
+    height: 20px;
+  }
+
+  .trust-text__ {
+    font-family: var(--font-body-family, "Cabinet Grotesk");
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    color: #000;
+    text-shadow: 0 0 black;
+  }
+
+  .wrapper-{{ id }} {
+    overflow: visible;
+    padding: 0;
+
+    .swiper-wrapper {
+      display: flex;
+    }
+
+    .swiper-slide {
+      height: auto;
+    }
+  }
+
+    .testimonial-card__ {
+            border-top: 2px solid #520723;
+            border-right: 7px solid #520723;
+            border-bottom: 7px solid #520723;
+            border-left: 2px solid #520723;
+            display: flex;
+            padding: var(--Spacing-Container-xl, 32px) var(--Spacing-Container-lg, 24px);
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--Spacing-Container-lg, 24px);
+            align-self: stretch;
+            {% comment %} height: 100%; {% endcomment %}
+            transition: all 0.3s ease;
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(127, 39, 72, 0.15);
+        }
+        @media(max-width: 600px) {
+            padding: 24px 20px;
+        }
+    }
+
+  .card-stars__ {
+    display: flex;
+    gap: 4px;
+  }
+
+  .card-content__ {
+    font-family: var(--font-body-family, "Cabinet Grotesk");
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #000;
+    {% comment %} flex: 1; {% endcomment %}
+    margin: 0;
+  }
+
+  .card-author__ {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  .author-avatar__ {
+    line-height: 0;
+    {% comment %} width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #7F2748;
+    background: #F5F5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; {% endcomment %}
+  }
+
+  .avatar-icon__ {
+    width: 16px;
+    height: 16px;
+    color: #7F2748;
+  }
+
+  .author-name__ {
+    font-family: var(--font-body-family, "Cabinet Grotesk");
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    color: #000;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 890px) {
+    #shopify-section-{{ id }} {
+      margin-top: {{ section.settings.margin_top_m }}px;
+      margin-bottom: {{ section.settings.margin_bottom_m }}px;
+      padding-top: {{ section.settings.padding_top_m }}px;
+      padding-bottom: {{ section.settings.padding_bottom_m }}px;
+    }
+  }
+</style>
+
+<section class="sec-{{ id }} ">
+  <div class="container-{{ id }} {% unless section.settings.full_width %}page-width{% endunless %}">
+    <div class="heading-wrapper-{{ id }}">
+      {% unless section.settings.heading == blank %}
+        <h2 class="heading-{{ id }}">{{ section.settings.heading }}</h2>
+      {% endunless %}
+
+      {% if section.settings.show_trust_badge %}
+        <div class="trust-badge__">
+          <div class="stars__">
+            {% for i in (1..5) %}
+              <svg
+                class="star-icon__"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path d="M18.3203 8.93578L14.7969 12.0108L15.8524 16.5889C15.9082 16.8282 15.8923 17.0787 15.8065 17.309C15.7208 17.5394 15.5691 17.7393 15.3703 17.8839C15.1716 18.0284 14.9346 18.1112 14.6891 18.1218C14.4436 18.1324 14.2004 18.0704 13.9899 17.9436L9.99689 15.5217L6.01252 17.9436C5.80202 18.0704 5.55881 18.1324 5.31328 18.1218C5.06775 18.1112 4.83079 18.0284 4.63204 17.8839C4.4333 17.7393 4.28157 17.5394 4.19584 17.309C4.1101 17.0787 4.09416 16.8282 4.15002 16.5889L5.20392 12.0155L1.6797 8.93578C1.49331 8.77502 1.35852 8.5628 1.29225 8.32574C1.22598 8.08868 1.23117 7.83733 1.30718 7.60321C1.38319 7.36909 1.52663 7.16262 1.71952 7.0097C1.9124 6.85678 2.14614 6.76421 2.39142 6.74359L7.03674 6.34125L8.85002 2.01625C8.94471 1.78931 9.10443 1.59546 9.30907 1.45911C9.51371 1.32276 9.75411 1.25 10 1.25C10.2459 1.25 10.4863 1.32276 10.691 1.45911C10.8956 1.59546 11.0553 1.78931 11.15 2.01625L12.9688 6.34125L17.6125 6.74359C17.8578 6.76421 18.0915 6.85678 18.2844 7.0097C18.4773 7.16262 18.6207 7.36909 18.6968 7.60321C18.7728 7.83733 18.778 8.08868 18.7117 8.32574C18.6454 8.5628 18.5106 8.77502 18.3242 8.93578H18.3203Z" fill="#7F2748"/>
+              </svg>
+            {% endfor %}
+          </div>
+          {% unless section.settings.trust_text == blank %}
+            <span class="trust-text__">{{ section.settings.trust_text }}</span>
+          {% endunless %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="wrapper-{{ id }} swiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" {{ block.shopify_attributes }}>
+            <div class="testimonial-card__">
+              <div class="card-stars__">
+                {% for i in (1..5) %}
+                  <svg
+                    class="star-icon__"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path d="M18.3203 8.93578L14.7969 12.0108L15.8524 16.5889C15.9082 16.8282 15.8923 17.0787 15.8065 17.309C15.7208 17.5394 15.5691 17.7393 15.3703 17.8839C15.1716 18.0284 14.9346 18.1112 14.6891 18.1218C14.4436 18.1324 14.2004 18.0704 13.9899 17.9436L9.99689 15.5217L6.01252 17.9436C5.80202 18.0704 5.55881 18.1324 5.31328 18.1218C5.06775 18.1112 4.83079 18.0284 4.63204 17.8839C4.4333 17.7393 4.28157 17.5394 4.19584 17.309C4.1101 17.0787 4.09416 16.8282 4.15002 16.5889L5.20392 12.0155L1.6797 8.93578C1.49331 8.77502 1.35852 8.5628 1.29225 8.32574C1.22598 8.08868 1.23117 7.83733 1.30718 7.60321C1.38319 7.36909 1.52663 7.16262 1.71952 7.0097C1.9124 6.85678 2.14614 6.76421 2.39142 6.74359L7.03674 6.34125L8.85002 2.01625C8.94471 1.78931 9.10443 1.59546 9.30907 1.45911C9.51371 1.32276 9.75411 1.25 10 1.25C10.2459 1.25 10.4863 1.32276 10.691 1.45911C10.8956 1.59546 11.0553 1.78931 11.15 2.01625L12.9688 6.34125L17.6125 6.74359C17.8578 6.76421 18.0915 6.85678 18.2844 7.0097C18.4773 7.16262 18.6207 7.36909 18.6968 7.60321C18.7728 7.83733 18.778 8.08868 18.7117 8.32574C18.6454 8.5628 18.5106 8.77502 18.3242 8.93578H18.3203Z" fill="#7F2748"/>
+                  </svg>
+                {% endfor %}
+              </div>
+
+              {% unless block.settings.content == blank %}
+                <p class="card-content__">{{ block.settings.content }}</p>
+              {% endunless %}
+
+              <div class="card-author__">
+                <div class="author-avatar__">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M6.33333 8.83333L8 10.5L11.75 6.75M6.50158 16.0007C6.77471 15.9646 7.05061 16.0387 7.26819 16.2063L8.27088 16.9757C8.60233 17.2303 9.06341 17.2303 9.39394 16.9757L10.4346 16.1766C10.629 16.0276 10.8744 15.9618 11.1169 15.9942L12.4187 16.1655C12.8325 16.2202 13.2316 15.9896 13.3918 15.6035L13.8926 14.3924C13.9861 14.1656 14.1658 13.986 14.3926 13.8925L15.6036 13.3915C15.9897 13.2323 16.2202 12.8323 16.1656 12.4184L16.0008 11.1638C15.9647 10.8907 16.0388 10.6148 16.2063 10.3972L16.9757 9.39443C17.2303 9.06296 17.2303 8.60186 16.9757 8.27131L16.1767 7.2306C16.0276 7.03616 15.9619 6.7908 15.9943 6.54821L16.1656 5.2464C16.2202 4.83252 15.9897 4.43346 15.6036 4.27328L14.3926 3.77236C14.1658 3.67885 13.9861 3.49922 13.8926 3.27238L13.3918 2.0613C13.2325 1.6752 12.8325 1.44465 12.4187 1.49928L11.1169 1.67057C10.8744 1.7039 10.629 1.63816 10.4355 1.49002L9.39486 0.690967C9.06341 0.436344 8.60233 0.436344 8.27181 0.690967L7.23115 1.49002C7.03672 1.63816 6.79137 1.7039 6.5488 1.67242L5.24706 1.50113C4.8332 1.4465 4.43416 1.67705 4.27399 2.06315L3.77403 3.27423C3.6796 3.50015 3.49998 3.67977 3.27407 3.77421L2.06306 4.2742C1.67699 4.43438 1.44645 4.83344 1.50107 5.24732L1.67236 6.54914C1.70383 6.79172 1.6381 7.03709 1.48996 7.2306L0.690956 8.27131C0.436348 8.60278 0.436348 9.06388 0.690956 9.39443L1.48996 10.4351C1.63903 10.6296 1.70476 10.8749 1.67236 11.1175L1.50107 12.4193C1.44645 12.8332 1.67699 13.2323 2.06306 13.3925L3.27407 13.8934C3.50091 13.9869 3.68052 14.1665 3.77403 14.3934L4.27492 15.6044C4.43416 15.9905 4.83413 16.2211 5.24798 16.1665L6.50158 16.0007Z" stroke="#1C2F5B" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                {% unless block.settings.author == blank %}
+                  <p class="author-name__">{{ block.settings.author }}</p>
+                {% endunless %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var swiper{{ id | replace: '-', '_' }} = new Swiper(".wrapper-{{ id }}.swiper", {
+      slidesPerView: 1.1,
+      spaceBetween: 16,
+      loop: {{ section.settings.enable_loop }},
+      autoplay: {{ section.settings.enable_autoplay | json }},
+      {% if section.settings.enable_autoplay %}
+      autoplay: {
+        delay: {{ section.settings.autoplay_delay | times: 1000 }},
+        disableOnInteraction: false,
+      },
+      {% endif %}
+      breakpoints: {
+        480: {
+          slidesPerView: 1.5,
+          spaceBetween: 16,
+        },
+        640: {
+          slidesPerView: 2.2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 2.5,
+          spaceBetween: 24,
+        },
+        1024: {
+          slidesPerView: 3.2,
+          spaceBetween: 24,
+        },
+        1280: {
+          slidesPerView: {{ section.settings.slides_desktop }},
+          spaceBetween: 32,
+        },
+      },
+    });
+  });
+
+    function setEqualHeight(selector){
+        const divs = document.querySelectorAll(selector);
+        const maxHeight = Math.max(...Array.from(divs, div => div.offsetHeight));
+        divs.forEach(div => {
+            div.style.height = `${maxHeight}px`;
+        });
+        };
+    document.addEventListener('DOMContentLoaded', () => {
+        setEqualHeight('.sec-{{ id }}  .card-content__');
+    });
+  
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials Slider",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF5FF"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Glam Gel Nails is Rated <strong>'Excellent'</strong> by <strong>over 20k</strong> Satisfied Customer",
+      "info": "Use bold for highlighted text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badge",
+      "label": "Show Trust Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_text",
+      "label": "Trust Badge Text",
+      "default": "Trusted by over 20k Womens"
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 0.1,
+      "label": "Slides Per View (Desktop)",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_loop",
+      "label": "Enable Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay Delay",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Mobile"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Review Content",
+          "default": "So I put these semi-cured gel nails through the wringer-dishes, dirt, you name it. And guess what? They're still kicking! Seriously impressed with how well they've held up."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Amber J."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Slider",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "content": "So I put these semi-cured gel nails through the wringer-dishes, dirt, you name it. And guess what? They're still kicking! Seriously impressed with how well they've held up.",
+            "author": "Amber J."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "content": "I was a bit skeptical at first, but they were easier to apply than I thought. Definitely won't be going back to the nail salon!",
+            "author": "Samantha M."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "content": "As someone who loves switching up their nail color frequently, these have been a dream come true. Plus, the removal process is a breeze! Highly recommend!",
+            "author": "Penelope J."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "content": "Out of all the at-home semi cured gel nails I've tested, this one takes the cake. They are cute, flexible, and fit perfectly to my nails. I'd rate it 10/10!",
+            "author": "Josie R."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

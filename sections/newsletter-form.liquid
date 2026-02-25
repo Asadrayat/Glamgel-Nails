@@ -1,0 +1,455 @@
+{% liquid
+  assign id = section.id
+%}
+
+<style>
+  .sec-{{ id }} {
+    box-sizing: border-box;
+    margin-top: {{section.settings.margin_top | append: 'px'}};
+    margin-bottom: {{section.settings.margin_bottom | append: 'px'}};
+    padding-top: {{section.settings.padding_top | append: 'px'}};
+    padding-bottom: {{section.settings.padding_bottom | append: 'px'}};
+    background: {{ section.settings.background_color }};
+    
+    .newsletter-container__ {
+      border-radius: 24px;
+      padding: 80px 60px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      {% if section.settings.background_image != blank %}
+        background-image: url('{{ section.settings.background_image | image_url: width: 1400 }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      {% else %}
+        background: {{ section.settings.card_background }};
+      {% endif %}
+      
+      @media(max-width: 768px) {
+        padding: 60px 32px;
+        border-radius: 16px;
+      }
+      
+      @media(max-width: 600px) {
+        padding: 48px 24px;
+      }
+    }
+    
+    .heading__ {
+      font-family: var(--font-heading-family, Minakoe);
+      font-size: var(--Font-Size-Heading-H2, 40px);
+      font-style: normal;
+      font-weight: 400;
+      line-height: var(--Line-Height-Heading-H2, 48px);
+      color: {{ section.settings.heading_color }};
+      max-width: {{ section.settings.heading_max_width | append: "px" }};
+      margin: 0 auto 16px;
+      
+      @media(max-width: 768px) {
+        font-size: 32px;
+        line-height: 40px;
+      }
+      
+      @media(max-width: 600px) {
+        font-size: 28px;
+        line-height: 36px;
+      }
+    }
+    
+    .description__ {
+      font-family: var(--font-body-family, "Cabinet Grotesk");
+      font-size: var(--Font-Size-Paragraph-Large, 16px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: var(--Line-Height-Paragraph-Large, 24px);
+      color: {{ section.settings.heading_color }};
+      max-width: {{ section.settings.heading_max_width | append: "px" }};
+      margin: 0 auto 40px;
+      
+      @media(max-width: 600px) {
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 100%;
+        margin: 0 0 32px;
+      }
+    }
+    
+    .form-wrapper__ {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-form {
+      width: 100%;
+    }
+    
+    .newsletter-form__field-wrapper {
+      position: relative;
+    }
+    
+    .btn_input-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      
+      @media(max-width: 600px) {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+    
+    .email_inp {
+      max-width: 100%;
+      flex-direction: column;
+      border-radius: 99px;
+      border: 1px solid var(--input-border-light-main, #D1D5DB);
+      background: var(--input-bg-default, #FFF);
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      display: flex;
+      height: 48px;
+      padding: 0px var(--Spacing-Container-xs, 12px);
+      gap: 8px;
+      align-self: stretch;
+      overflow: hidden;
+      color: var(--input-text-placeholder, #6B7280);
+      text-overflow: ellipsis;
+      font-family: var(--font-body-family, Satoshi);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;
+      flex: 1 0 0;
+      width: 100%;
+      border: 1px solid rgb(191 193 191);
+      padding: 15px 20px;
+      outline: none;
+      margin: 0;
+      
+      @media(max-width: 600px) {
+        width: 100%;
+      }
+    }
+    
+    .email_inp:focus-visible {
+      outline: none;
+      outline-offset: 0;
+      box-shadow: unset;
+    }
+
+    .email_inp::placeholder {
+      color: var(--input-text-placeholder, #6B7280);
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    
+
+    
+    .newsletter-form__message {
+      margin-top: 16px;
+      font-family: var(--font-body-family, "Cabinet Grotesk");
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .newsletter-form__message--success {
+      color: #4ADE80;
+    }
+    
+    .cf-errror_msg {
+      display: flex;
+      color: #FCA5A5;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .svg__wrapper-error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+    }
+    
+    .form__message {
+      justify-content: center;
+    }
+  }
+
+  @media(max-width: 600px) {
+    .sec-{{ id }} {
+      margin-top: {{section.settings.margin_top_m | append: 'px'}};
+      margin-bottom: {{section.settings.margin_bottom_m | append: 'px'}};
+      padding-top: {{section.settings.padding_top_m | append: 'px'}};
+      padding-bottom: {{section.settings.padding_bottom_m | append: 'px'}};
+    }
+  }
+</style>
+
+<div class="sec-{{ id }}" id="{{ section.settings.sec_id }}">
+  <div class="{% unless section.settings.full_width %}page-width{% endunless %}">
+    <div class="newsletter-container__">
+      {% unless section.settings.heading == blank %}
+        <h2 class="heading__">{{ section.settings.heading }}</h2>
+      {% endunless %}
+      
+      {% unless section.settings.description == blank %}
+        <p class="description__">{{ section.settings.description }}</p>
+      {% endunless %}
+      
+      <div class="form-wrapper__">
+        {% form 'customer', class: 'newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div
+            class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }};"
+            {% endif %}
+          >
+            {%- if form.errors -%}
+              <small
+                class="newsletter-form__message form__message cf-errror_msg"
+                id="Newsletter-error--{{ section.id }}"
+              >
+                <div class="svg__wrapper-error">{%- render 'icon-error' -%}</div>
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </small>
+            {%- endif -%}
+            <div class="btn_input-wrapper">
+              <input
+                id="NewsletterForm--{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                class="email_inp"
+                value="{{ form.email }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                {% if form.errors %}
+                  autofocus
+                  aria-invalid="true"
+                  aria-describedby="Newsletter-error--{{ section.id }}"
+                {% elsif form.posted_successfully? %}
+                  aria-describedby="Newsletter-success--{{ section.id }}"
+                {% endif %}
+                placeholder="{{ section.settings.placeholder }}"
+                required
+              >
+              <div>
+                <button
+                  type="submit"
+                  class=" cta_button"
+                  name="commit"
+                  id="Subscribe"
+                  aria-label="{{ 'newsletter.button_label' | t }}"
+                >
+                  {{ section.settings.button_text }}
+                </button>
+              </div>
+            </div>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <h3
+              class="newsletter-form__message newsletter-form__message--success form__message"
+              id="Newsletter-success--{{ section.id }}"
+              tabindex="-1"
+              autofocus
+            >
+              {% render 'icon-success' -%}
+              {{- section.settings.success_message }}
+            </h3>
+          {%- endif -%}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter Signup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width Section",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "sec_id",
+      "label": "Section Id"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FFF5FF"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Container Background Image",
+      "info": "If image is selected, it will override the gradient background"
+    },
+    {
+      "type": "color_background",
+      "id": "card_background",
+      "label": "Container Background Gradient",
+      "default": "linear-gradient(135deg, #8B4C6B 0%, #B8739B 100%)",
+      "info": "Used only if no background image is selected"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get 25% off on your Starter Kit"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Be the first to know about new drops, sales, and tips you'll love."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#000"
+    }, 
+    {
+      "type": "range",
+      "id": "heading_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Heading Max Width",
+      "default": 450
+    },       
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email Placeholder",
+      "default": "Your E-mail"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Sign Up"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thanks for subscribing!"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Mobile"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Signup"
+    }
+  ]
+}
+{% endschema %}

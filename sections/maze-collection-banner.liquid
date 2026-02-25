@@ -1,0 +1,194 @@
+<style>
+  .section-container--{{ section.id }}{
+    margin-top: {{ section.settings.margin_top | append:'px' }};
+    margin-bottom: {{ section.settings.margin_bottom | append:'px' }};
+    padding-top: {{ section.settings.padding_top | append:'px' }};
+    padding-bottom: {{ section.settings.padding_bottom | append:'px' }};
+    overflow: hidden;
+    background-color: {{ section.settings.bg-color }};
+  }
+
+  @media screen and (max-width: 768px){
+    .section-container--{{ section.id }}{
+      margin-top: {{ section.settings.margin_top_mobile | append:'px' }};
+      margin-bottom: {{ section.settings.margin_bottom_mobile | append:'px'  }};
+      padding-top: {{ section.settings.padding_top_mobile | append:'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_mobile | append:'px' }};
+    }
+  }
+</style>
+
+{{ 'maze-collection-banner-style.css' | asset_url | stylesheet_tag }}
+<section class="section-container--{{ section.id }}">
+  <div class="section-wrapper--{{ section.id }} custom-collection__banner">
+    <div class="collection-intro page-width">
+      {% if collection.handle == 'all' %}
+        <h1 class="">Semi-Cured Gel Nails</h1>
+      {% else %}
+        <h1 class="">{{ section.settings.title }}</h1>
+      {% endif %}
+
+      <p>{{ section.settings.subtitle }}</p>
+    </div>
+    <div class="collection-tags">
+      <h4 class="cc_category">{{ section.settings.collection_label }}</h4>
+      <div class="tags">
+        {% for block in section.blocks %}
+          {% assign collection = block.settings.collection %}
+          <a
+            class="{% if collection.handle == collection.handle %}active-tag{% endif %}"
+            href="{{ collection.url }}"
+          >
+            {{ collection.title }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="highlighted_text">
+      <h4>{{ section.settings.highlight }}</h4>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maze Collection Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "highlight",
+      "label": "Highlighted Text"
+    },
+    {
+      "type": "text",
+      "id": "collection_label",
+      "label": "Collection Label",
+      "default": "Categories"
+    },
+
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Background Color",
+      "default": "#FFEBFF"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Collection",
+      "type": "collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Maze Collection Banner"
+    }
+  ]
+}
+{% endschema %}

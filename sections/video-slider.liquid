@@ -1,0 +1,519 @@
+{% liquid
+  assign id = section.id
+%}
+
+<style>
+    #shopify-section-{{id}} {
+      margin-top: {{section.settings.margin_top | append: 'px'}};
+      margin-bottom: {{section.settings.margin_bottom | append: 'px'}};
+      padding-top: {{section.settings.padding_top | append: 'px'}};
+      padding-bottom: {{section.settings.padding_bottom | append: 'px'}};
+      background: {{ section.settings.bg }};
+        .swiper-button-disabled {
+            opacity: 0.3;        
+        }      
+    }
+    .vrs__wrapper{
+      position: relative;
+    }
+
+    .vrs__header{
+      margin: 0 0 30px;
+      text-align: center;
+    }
+    .vrs__header h2{
+      font-size: 32px;
+      line-height: 36px;
+      margin: 0;
+    }
+    .vrs__slider--{{ section.id }}{
+      position: relative;
+    }
+    .vrs__slider--{{ section.id }} .swiper-slide{
+      height: auto;
+    }
+    .slider-slide-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      box-sizing: border-box;
+      font-size: 0;
+      line-height: 0;
+      cursor: pointer;
+      {% comment %} max-width: 300px; {% endcomment %}
+    }
+    .play-button-{{ section.id }} {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -100%);
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    p.video-length {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 14px;
+      color: #fff;
+      margin: 0;
+    }
+    .slider-slide-video.playing ~ p.video-length{
+      display: none;
+    }
+    .swiper__btn_wrap {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    #shopify-section-{{id}} #next--{{ section.id }}, #shopify-section-{{id}} #prev--{{ section.id }} {
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    }
+
+
+    .video__slider-modal{
+      display: none;
+      background: rgb(0,0,0,0.8);
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      cursor: pointer;
+    }
+    .video__slider-modal.show-modal{
+      display: block;
+    }
+    .video__slider-modal video{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+    }
+  /* new code starts here for product wrapper  */
+    .wrapper-{{ id }} .swiper-slide.vls__video-item {
+        box-sizing: border-box;
+    }
+
+    .wrapper-{{ id }} .product-wrapper {
+        position: relative;
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        border: 1px solid var(--Border-Base-subtle, #E5E7EB);
+        background: #FFF;
+        padding: var(--Spacing-Container-xxs, 6px);
+        align-items: center;
+        gap: var(--Spacing-Container-xxs, 6px);
+        align-self: stretch;
+        box-sizing: border-box;
+      a.absolute_link{
+        position: absolute;
+         width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: block;
+      }
+      .pw_info {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+      }      
+      .pw_title{
+        color: #000;
+        font-family: var(--font-body-family, "Cabinet Grotesk");
+        font-size: var(--Font-Size-Paragraph-Medium, 14px);
+        font-style: normal;
+        font-weight: 800;
+        line-height: var(--Line-Height-Paragraph-Medium, 20px);
+        margin: 0;
+        text-decoration: none;
+        display: block;
+      }
+      .pw-product-price {
+        color: #000;
+        /* Paragraph/Small */
+        font-family: var(--font-family-Body, Gotham);
+        font-size: var(--Font-Size-Paragraph-Small, 12px);
+        font-style: normal;
+        font-weight: 400;
+        line-height: var(--Line-Height-Paragraph-Small, 16px); /* 133.333% */
+        display: flex;
+        gap: 8px;
+        color: #000;
+        text-transform: capitalize;
+        margin: 0;
+        text-decoration: none;
+        /* display: block; */
+        p{
+          margin: 0;
+        }
+        p.compare_at_price {
+          text-decoration: line-through;
+        }
+      }
+      img{
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        aspect-ratio: 2/3;
+      }
+    }
+  /* new code starts here for product wrapper  */
+
+    @media screen and (min-width: 769px){
+      .video__slider-modal video{
+        min-width: 465px;
+        max-width: 465px;
+      }
+    }
+    @media screen and (min-width: 990px){
+      #pagination--{{ section.id }}{
+        display: none;
+      }
+    }
+    @media screen and (max-width: 989px){
+      #shopify-section-{{id}}{
+        margin-top: {{section.settings.margin_top_m | append: 'px'}};
+        margin-bottom: {{section.settings.margin_bottom_m | append: 'px'}};
+        padding-top: {{section.settings.padding_top_m | append: 'px'}};
+        padding-bottom: {{section.settings.padding_bottom_m | append: 'px'}};
+      }
+      .vrs__header {
+        margin: 0 0 18px;
+      }
+      .vrs__header h2 {
+        font-size: 24px;
+        line-height: 28px;
+      }
+      .video__slider-modal video{
+        min-width: 90%;
+      }
+      #shopify-section-{{id}} #next--{{ section.id }}, #shopify-section-{{id}} #prev--{{ section.id }}{
+        {% comment %} display: none; {% endcomment %}
+      }
+      #pagination--{{ section.id }}{
+        position: static;
+        margin: 10px 0 0;
+      }
+       #pagination--{{ section.id }} .swiper-pagination-bullet{
+         width: 4px;
+         height: 4px;
+       }
+      #pagination--{{ section.id }} .swiper-pagination-bullet.swiper-pagination-bullet-active{
+        width: 30px;
+      }
+    }
+</style>
+
+<video-reviews-section data-section-id="{{ section.id }}">
+  <div class="vrs__wrapper page-width">
+    {% if section.settings.title != blank %}
+      <div class="vrs__header">
+        <h2>{{ section.settings.title }}</h2>
+      </div>
+    {% endif %}
+    <div class="vrs__slider--{{ section.id }}">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div
+              class="swiper-slide vls__video-item {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {% if settings.animations_reveal_on_scroll %}
+                data-cascade
+                style="--animation-order: {{ forloop.index }};"
+              {% endif %}
+            >
+              <div class="wrapper-{{ id }}">
+                {% unless block.settings.video == blank %}
+                  {{
+                    block.settings.video
+                    | video_tag:
+                      image_size: '200x',
+                      autoplay: true,
+                      loop: true,
+                      muted: true,
+                      controls: false,
+                      class: 'slider-slide-video',
+                      data-index: forloop.index
+                  }}
+                  <p class="video-length"></p>
+                  <div class="play-button-{{ section.id }}">
+                    {% render 'all-icons', name: 'play' %}
+                  </div>
+                {% endunless %}
+                {% if block.settings.product != blank %}
+                  <div class="product-wrapper">
+                    {% assign product = block.settings.product %}
+                    <a class="absolute_link" href="{{ product.url }}"></a>
+                    {% if product.featured_image %}
+                      {{ product.featured_image | image_url: width: product.featured_image.width | image_tag }}
+                    {% endif %}
+                    <div class="pw_info">
+                      <div class="pw_title">{{ product.title | escape }}</div>
+                      {% if product.price %}
+                        <div class="pw-product-price">
+                          {% if product.selected_or_first_available_variant.price
+                              < product.selected_or_first_available_variant.compare_at_price
+                          %}
+                            <p>
+                              <span>{{ cart.currency.symbol }}</span>
+                              {{- product.selected_or_first_available_variant.price | money_without_currency }}
+                            </p>
+                            <p class="compare_at_price">
+                              <span>{{ cart.currency.symbol }}</span>
+                              {{-
+                                product.selected_or_first_available_variant.compare_at_price
+                                | money_without_currency
+                              }}
+                            </p>
+                          {% else %}
+                            <p>
+                              <span>{{ cart.currency.symbol }}</span>
+                              {{- product.selected_or_first_available_variant.price | money_without_currency }}
+                            </p>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% if section.blocks.size > 0 %}
+      <div class="swiper__btn_wrap">
+        <div id="prev--{{ section.id }}" class="prev--{{ section.id }}">
+          {% render 'all-icons', name: 'leftt-arrow' %}
+        </div>
+        <div id="next--{{ section.id }}" class="next--{{ section.id }}">
+          {% render 'all-icons', name: 'right-arrow' %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</video-reviews-section>
+<div class="video__slider-modal"></div>
+
+<script>
+  class VideoReviewsSection extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      document.addEventListener('DOMContentLoaded', () => {
+        this.initSwiper();
+        this.setupEventListeners();
+      });
+    }
+
+    initSwiper() {
+        new Swiper(this.querySelector('.swiper'), {
+            slidesPerView: 1.7,
+            spaceBetween: 10,
+            breakpoints: {
+            300: { slidesPerView: 1.3, spaceBetween: 10 },
+            560: { slidesPerView: 2, spaceBetween: 10 },
+            769: { slidesPerView: 2.5, spaceBetween: 15 },
+            1024: { slidesPerView: 3, spaceBetween: 15 },
+            1200: { slidesPerView: 4, spaceBetween: 15 },
+            1440: { slidesPerView: 5, spaceBetween: 15 },
+            },
+            {% comment %} pagination: { el: `#pagination--${this.dataset.sectionId}` }, {% endcomment %}
+            navigation: {
+            nextEl: `#next--${this.dataset.sectionId}`,
+            prevEl: `#prev--${this.dataset.sectionId}`,
+            },
+        });
+    }
+
+    setupEventListeners() {
+      const videos = this.querySelectorAll('.vls__video-item');
+      videos.forEach((video) => {
+        video.addEventListener('click', this.handleVideoClick.bind(this));
+      });
+
+      const videoModal = document.querySelector('.video__slider-modal');
+      videoModal.addEventListener('click', this.handleModalClick.bind(this));
+    }
+
+    handleVideoClick(event) {
+      if (event.target.closest('.product-wrapper')) {
+        return;
+      }
+
+      const videoModal = document.querySelector('.video__slider-modal');
+      videoModal.classList.add('show-modal');
+      const videoElement = event.currentTarget.querySelector('video');
+      videoModal.innerHTML = videoElement.outerHTML;
+      const modalVideo = videoModal.querySelector('video');
+      modalVideo.play();
+      modalVideo.autoplay = true;
+      modalVideo.muted = false;
+      modalVideo.loop = false;
+      modalVideo.controls = true;
+    }
+
+    handleModalClick(event) {
+      const videoModal = document.querySelector('.video__slider-modal');
+      if (event.target === videoModal) {
+        videoModal.classList.remove('show-modal');
+        const modalVideo = videoModal.querySelector('video');
+        modalVideo.pause();
+      }
+    }
+  }
+
+  customElements.define('video-reviews-section', VideoReviewsSection);
+</script>
+{% schema %}
+{
+  "name": "Featured Videos",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background Color"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Desktop"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing Mobile"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_m",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Video",
+      "type": "video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Videos"
+    }
+  ]
+}
+{% endschema %}

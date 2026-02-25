@@ -1,0 +1,196 @@
+.mobile-only {
+  display: none;
+}
+.desktop-only {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-only {
+    display: block;
+  }
+  .desktop-only {
+    display: none;
+  }
+}
+
+
+/* Collection Page Start */
+.facets-wrapper.page-width {
+    background-color: #FFEBFF;
+}
+/* Collection Page End */
+
+/* Product Page Start */
+h2.product-breadcrumb {
+    color: #d1d5db;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin: 0 0 16px 0;
+    /* letter-spacing: -0.32px; */
+}
+/* Product Page End */
+
+#smile-lite-launcher-frame button{
+  background-color: #7f2748 !important; 
+}
+
+.cta_button {
+    border-radius: 52px;    
+    display: flex;
+    padding: 16px 32px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    width: max-content;
+    color: #f3f3f3;
+    background-color: #7f2748;
+    box-shadow: unset;
+    text-decoration: none;
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+    border: 1px solid transparent;
+    &:hover {
+      background-color: #f3f3f3;
+      color: #7F2748;
+      border: 1px solid #7F2748;
+    }      
+}
+
+.scroll-trigger.animate--slide-in {
+  opacity: 1;
+}
+
+
+.bundle_popup__wrap__ button{
+  border: none;
+}
+.bundle_popup__wrap__ button::before, .bundle_popup__wrap__ button::after{
+  content: unset;
+}
+.bundle_popup__wrap__ {
+     padding: 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4f41464d;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 99;
+    transition: visibility .3s ease,opacity .3s ease;
+}
+
+.bundle_popup__wrap__.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.bundle_popup__wrap__ .container__ {
+    max-height: calc(100vh - 40px);
+    max-width: 815px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 5px 12px #ffa5ba40;
+    padding: 24px 40px 0;
+}
+.bundle_popup__wrap__ .select-wraps__grid {
+    max-height: 450px;
+    padding-bottom: 150px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 24px 12px;
+    overflow: scroll;
+    @media(max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+}
+.bundle_popup__wrap__ button.bundle__product__card {
+    box-sizing: border-box;
+    padding: 0;
+    background: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.bundle_popup__wrap__ .bpc__image {
+  line-height: 0;
+  border: 2px solid #8824445e;
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4/5;
+  }
+}
+button.bundle__product__card.active .bpc__image{
+  border: 2px solid #882444;
+}
+.bundle_popup__wrap__ .top__wrap__ {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #8824443d;
+    h2 {
+      color: #882444;
+      text-align: center;
+      font-family: Minakoe;
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 105%;
+      letter-spacing: -1.2px;
+      margin: 0;
+    }
+}
+.bundle_popup__wrap__ button.close__btn__ {
+    line-height: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: inherit;
+    padding: 8px;
+}
+
+.bundle_popup__wrap__ button.cta__bundle_button__ {
+    padding: 16px 40px;
+    width: 100%;
+    color: #FFF;
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.35px;
+    background: #882444;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
+}
+.bundle_popup__wrap__ p.bpc__title {
+    color: #882444;
+    text-align: center;
+    font-family: Satoshi;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22.75px;
+    margin: 15px 0 0;
+}
+.bundle_popup__wrap__ button.cta__bundle_button__.is-disabled {
+  background: #af7e8e;
+}
